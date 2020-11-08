@@ -1,0 +1,4 @@
+Sitemap: https://henry2004y.github.io/JuliaNotes/sitemap.xml
+
+User-agent: *
+Disallow:

@@ -1,0 +1,79 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/pure.css"> <link rel=stylesheet  href="/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/assets/favicon.png"> <title>Meta Programming</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">Pure-SM</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/" class=pure-menu-link >Home</a> <li class="pure-menu-item "><a href="/menu1/" class=pure-menu-link >Questions</a> <li class="pure-menu-item "><a href="/menu2/" class=pure-menu-link >Types</a> <li class="pure-menu-item pure-menu-selected"><a href="/menu3/" class=pure-menu-link >Meta</a> <li class="pure-menu-item pure-menu-selected"><a href="/menu4/" class=pure-menu-link >Parallel</a> <li class="pure-menu-item pure-menu-selected"><a href="/menu5/" class=pure-menu-link >Interoperability</a> <li class="pure-menu-item pure-menu-selected"><a href="/menu6/" class=pure-menu-link >Issues and Tricks</a> </ul> </div> </div> <div id=main > <div class=header > <h1>Meta Programming</h1> <h2>Notes taken during the learning process</h2> </div> <div class=franklin-content ><h1 id=metaprogramming ><a href="#metaprogramming">Metaprogramming</a></h1> <p><strong>Example</strong>:</p> <ul> <li><p>page with tag <a href="/tag/syntax/"><code>syntax</code></a></p> <li><p>page with tag <a href="/tag/image/"><code>image</code></a></p> <li><p>page with tag <a href="/tag/code/"><code>code</code></a></p> </ul> <div class=franklin-toc ><ol><li><a href="#quoting_expressions">Quoting Expressions</a><li><a href="#interpolating_strings">Interpolating strings</a><li><a href="#macros">Macros</a><li><a href="#closing_words_about_macros">Closing Words about Macros</a></ol></div> <p>I have not used metaprogramming in any real program myself, but I would like to see its usage.</p> <p>Understanding metaprogramming is not easy, so don&#39;t panic if it doesn&#39;t come naturally from the start. One of the reasons for this is that it takes place at a level of abstraction higher than what we&#39;re used to with regular programming. We will start with symbols, which makes the introduction less abstract. They look like this –- <code>:x</code> or <code>:scientific</code> or <code>:Celsius</code>. As you may have noticed, a symbol represents an identifier and we use it very much like a constant. However, it&#39;s more than that. It represents a piece of code that, instead of being evaluated as the variable, is used to refer to a variable itself.</p> <p>A good analogy for understanding the relationship between a symbol and a variable has to do with the words in a phrase. Take for example the sentence: Richard is tall. Here, we understand that Richard is the name of a person, most likely a man. And Richard, the person, is tall. However, in the sentence: Richard has seven letters, it is obvious that now we aren&#39;t talking about Richard the person. It wouldn&#39;t make too much sense to assume that Richard the person has seven letters. We are talking about the word Richard itself.</p> <p>The equivalent, in Julia, of the first sentence &#40;Richard is tall&#41; would be <code>julia&gt; x</code>. Here, <code>x</code> is immediately evaluated in order to produce its value. If it hasn&#39;t been defined, it will result in an error, shown as follows:</p> <pre><code class="julia hljs">x <span class=hljs-comment ># ERROR: UndefVarError: x not defined</span></code></pre>
+<p>Julia&#39;s symbols mimic the second sentence, where we talk about the word itself. In English, we wrap the word in single quotes, &#39;Richard&#39;, to indicate that we&#39;re not referring to a person but to the word itself. In the same way, in Julia, we prefix the variable name with a column, <code>:x</code>:</p>
+<pre><code class="julia hljs">:x
+typeof(:x) <span class=hljs-comment ># Symbol</span></code></pre>
+<p>Hence, the column <code>:</code> prefix is an operator that stops the evaluation. An unevaluated expression can be evaluated on demand by using the <code>eval&#40;&#41;</code> function or the <code>@eval</code> macro, as follows:</p>
+<pre><code class="julia hljs">eval(:x) <span class=hljs-comment ># ERROR: UndefVarError: x not defined</span></code></pre>
+<p>But we can go beyond symbols. We can write more complex symbol-like statements, for example, <code>:&#40;x &#61; 2&#41;</code>. This works a lot like a symbol but it is, in fact, an <code>Expr</code> type, which stands for expression. The expression, like any other type, can be referenced through variable names and, like symbols, they can be evaluated:</p>
+<pre><code class="julia hljs">assign = :(x = <span class=hljs-number >2</span>)
+eval(assign) 
+x <span class=hljs-comment ># 2</span></code></pre>
+<p>The preceding snippet demonstrates that we can reference an <code>Expr</code> type with the assign variable and then eval it. Evaluation produces side effects, the actual value of the variable <code>x</code> now being 2.</p>
+<p>Even more powerful, since <code>Expr</code> is a type, it has properties that expose its internal structure:</p>
+<pre><code class="julia hljs">fieldnames(typeof(assign)) <span class=hljs-comment ># (:head, :args)</span></code></pre>
+<p>Every Expr object has two fields –- <code>head</code> representing its kind and <code>args</code> standing for the arguments. We can view the internals of <code>Expr</code> by using the <code>dump&#40;&#41;</code> function:</p>
+<pre><code class="julia hljs">dump(assign)</code></pre>
+<p>which shows</p>
+<pre><code class="plaintext hljs">Expr
+head: Symbol =
+args: Array{Any}((2,))
+1: Symbol x
+2: Int64 2</code></pre>
+<p>This leads us to even more important discoveries. First, it means that we can programmatically manipulate <code>Expr</code> through its properties:</p>
+<pre><code class="julia hljs">assign.args[<span class=hljs-number >2</span>] = <span class=hljs-number >3</span> 
+eval(assign)
+x <span class=hljs-comment ># 3</span></code></pre>
+<p>Our expression is no longer <code>:&#40;x &#61; 2&#41;</code>; it&#39;s now <code>:&#40;x &#61; 3&#41;</code>. By manipulating the <code>args</code> of the assign expression, the value of <code>x</code> is now 3.</p>
+<p>Second, we can programmatically create new instances of <code>Expr</code> using the type&#39;s constructor:</p>
+<pre><code class="julia hljs">assign4 = <span class=hljs-built_in >Expr</span>(:(=), :x, <span class=hljs-number >4</span>)
+eval(assign4)
+x <span class=hljs-comment ># 4</span></code></pre>
+<p>Please notice here that we wrapped the equals sign <code>&#40;&#61;&#41;</code> in parenthesis to designate an expression, as Julia gets confused otherwise, thinking we want to perform an assignment right there.</p>
+<h2 id=quoting_expressions ><a href="#quoting_expressions">Quoting Expressions</a></h2>
+<p>The previous procedure, in which we wrap an expression within <code>:&#40;...&#41;</code> in order to create <code>Expr</code> objects, is called <strong>quoting</strong>. It can also be done using quote blocks. Quote blocks make quoting easier as we can pass regular-looking code into them &#40;as opposed to translating everything in to symbols&#41;, and supports quoting multiple lines of code in order to build randomly complex expressions:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >quote</span> 
+    y = <span class=hljs-number >42</span> 
+    x = <span class=hljs-number >10</span> 
+<span class=hljs-keyword >end</span>
+ 
+eval(ans) <span class=hljs-comment ># 10</span>
+y <span class=hljs-comment ># 42</span>
+x <span class=hljs-comment ># 10</span></code></pre>
+<h2 id=interpolating_strings ><a href="#interpolating_strings">Interpolating strings</a></h2>
+<p>Just like with string interpolation, we can reference variables within the expressions:</p>
+<pre><code class="julia hljs">name = <span class=hljs-string >&quot;Dan&quot;</span>
+greet = :(<span class=hljs-string >&quot;Hello &quot;</span> * $name)
+eval(greet) <span class=hljs-comment ># &quot;Hello Dan&quot;</span></code></pre>
+<h2 id=macros ><a href="#macros">Macros</a></h2>
+<p>Now, we finally have the knowledge to understand macros. They are language constructs, which are executed after the code is parsed, but before it is evaluated. It can optionally accept a tuple of arguments and must return an <code>Expr</code>. The resulting Expression is directly compiled, so we don&#39;t need to call <code>eval&#40;&#41;</code> on it.</p>
+<p>For example, we can implement a configurable version of the previous <code>greet</code> expression as a macro:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >macro</span> greet(name)
+    :(<span class=hljs-string >&quot;Hello &quot;</span> * $name)
+<span class=hljs-keyword >end</span>
+<span class=hljs-meta >@greet</span>(<span class=hljs-string >&quot;Adrian&quot;</span>) <span class=hljs-comment ># &quot;Hello Adrian&quot;</span></code></pre>
+<p>As per the snippet, macros are defined using the macro keyword and are invoked using the <code>@...</code> syntax. The brackets are optional when invoking macros, so we could also use <code>@greet &quot;Adrian&quot;</code>.</p>
+<p>Macros are very powerful language constructs that allow parts of the code to be customized before the full program is run. The official Julia documentation has a great example to illustrate this behavior:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >macro</span> twostep(arg)
+    println(<span class=hljs-string >&quot;I execute at parse time. The argument is: &quot;</span>, arg)
+    <span class=hljs-keyword >return</span> :(println(<span class=hljs-string >&quot;I execute at runtime. The argument is: &quot;</span>, $arg))
+<span class=hljs-keyword >end</span></code></pre>
+<p>We define a <code>macro</code> called <code>twostep</code>, which has a body that calls the <code>println</code> function to output text to the console. It returns an expression which, when evaluated, will also output a piece of text via the same <code>println</code> function.</p>
+<p>Now we can see it in action:</p>
+<pre><code class="julia hljs">ex = macroexpand(<span class=hljs-meta >@__MODULE__</span>, :(<span class=hljs-meta >@twostep</span> :(<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>)))
+<span class=hljs-comment ># I execute at parse time. The argument is: $(Expr(:quote, :((1, 2, 3))))</span></code></pre>
+<p>The snippet shows a call to macroexpand, which takes as an argument the module in which to expand the expression &#40;in our case, <code>@__MODULE__</code> stands for the current module&#41; and an expression that represents a macro invocation. The call to <code>macroexpand</code> converts &#40;expands&#41; the macro into its resulting expressions. The output of the <code>macroexpand</code> call is suppressed by appending <code>;</code> at the end of the line, but the resulting expression is still safely stored in <code>ex</code>. Then, we can see that the expanding of the macro &#40;its parsing&#41; takes place because the &quot;I execute at parse time&quot; message is output. Now look what happens when we evaluate the expression, <code>ex</code>:</p>
+<pre><code class="julia hljs">eval(ex) <span class=hljs-comment ># I execute at runtime. The argument is: (1, 2, 3)</span></code></pre>
+<p>The &quot;I execute at runtime&quot; message is outputted, but not the &quot;I execute at parse time&quot; message. This is a very powerful thing. Imagine that output instead of a simple text output if we&#39;d had some very computationally intensive or time-consuming operations. In a simple function, we&#39;d have to run this code every time, but with a macro, this is done only once, at parse time.</p>
+<h2 id=closing_words_about_macros ><a href="#closing_words_about_macros">Closing Words about Macros</a></h2>
+<p>Besides they&#39;re very powerful, macros are also very convenient. They can provide a lot of functionality with minimal overhead and can simplify the invocation of functions that take expressions as arguments. For example, <code>@time</code> is a very useful macro that executes an <code>Expression</code> while measuring the execution time. And the great thing is that we can pass the argument expression as regular code, instead of building the <code>Expr</code> by hand:</p>
+<pre><code class="julia hljs"><span class=hljs-meta >@time</span> rand(<span class=hljs-number >1000</span>); <span class=hljs-comment ># 0.000007 seconds (5 allocations: 8.094 KiB)</span></code></pre>
+<p>Macros –- and metaprogramming in general –- are powerful concepts that require whole books to discuss at length. For more, going over the <a href="https://docs.julialang.org/en/stable/manual/metaprogramming/">official documentation</a>.</p>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Hongyang Zhou. Last modified: November 08, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+      </div> 
+  </div> 
+  <script src="/libs/pure/ui.min.js"></script>

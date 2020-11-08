@@ -1,0 +1,28 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/pure.css"> <link rel=stylesheet  href="/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/assets/favicon.png"> <title>Interoperability</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">Pure-SM</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/" class=pure-menu-link >Home</a> <li class="pure-menu-item "><a href="/menu1/" class=pure-menu-link >Questions</a> <li class="pure-menu-item "><a href="/menu2/" class=pure-menu-link >Types</a> <li class="pure-menu-item "><a href="/menu3/" class=pure-menu-link >Meta</a> <li class="pure-menu-item "><a href="/menu4/" class=pure-menu-link >Parallel</a> <li class="pure-menu-item "><a href="/menu5/" class=pure-menu-link >Interoperability</a> <li class="pure-menu-item "><a href="/menu6/" class=pure-menu-link >Issues and Tricks</a> </ul> </div> </div> <div id=main > <div class=header > <h1>Interoperability</h1> <h2>Notes taken during the learning process</h2> </div> <div class=franklin-content ><h1 id=interoperability ><a href="#interoperability">Interoperability</a></h1> <h2 id=python ><a href="#python">Python</a></h2> <p>I have encountered tons of issues calling Python in Julia, or vice versa. You are lucky if you succeed in the first attempt&#33;</p> <pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-literal >ENV</span>[<span class=hljs-string >&quot;PYTHON&quot;</span>]=<span class=hljs-string >&quot;~/anaconda3/bin/python&quot;</span></span></code></pre>
+<p>I had several times of &quot;no backend GUI for matplotlib&quot; issue after installing the PyJulia package in Python for using Julia. The problem was solved by entering</p>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-literal >ENV</span>[<span class=hljs-string >&quot;PYTHON&quot;</span>]=<span class=hljs-string >&quot;&quot;</span>; Pkg.build(<span class=hljs-string >&quot;PyCall&quot;</span>)</span></code></pre>
+<p>Online someone mentioned setting</p>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-literal >ENV</span>[<span class=hljs-string >``</span>MPLBACKEND&#x27;&#x27;] = <span class=hljs-string >``</span>tkagg&#x27;&#x27;
+</span>
+<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >using</span> PyPlot</span></code></pre>
+<p>However, that does not work for me. There seems to be some version and dependency issues with mixing Python and Julia.</p>
+<h2 id=c ><a href="#c">C</a></h2>
+<p>Check out <a href="https://github.com/henry2004y/JuliaCalls">JuliaCalls</a>.</p>
+<h2 id=fortran ><a href="#fortran">Fortran</a></h2>
+<p>Julia calls C is pretty straightforward, but it was a pain for the first time calling Fortran. Basically there are two types of obstacles:</p>
+<ul>
+<li><p>Julia is a rapidly evolving language, so syntax changes very quickly.</p>
+
+<li><p>There are much fewer examples on the Internet than, say, PyCall.</p>
+
+</ul>
+<p>Despite all of these, I made it work initially in Julia 1.1. The idea is to see if I can directly call BATL library from Julia, as a first step of rewriting BATSRUS.</p>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Hongyang Zhou. Last modified: November 08, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+      </div> 
+  </div> 
+  <script src="/libs/pure/ui.min.js"></script>
