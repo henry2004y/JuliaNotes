@@ -3,6 +3,7 @@ Add here global page variables to use throughout your
 website.
 The website_* must be defined for the RSS to work
 -->
+@def prepath = "JuliaNotes"
 @def website_title = "Coding in Julia"
 @def website_descr = "Julia programming notes"
 @def website_url   = "https://henry2004y.github.io/JuliaNotes/"
