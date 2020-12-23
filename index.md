@@ -86,3 +86,5 @@ In case you fail, people in the community are generally helpful. Most of them wo
 [Julia Programming Projects, Adrian Salceanu](https://github.com/PacktPublishing/Julia-Programming-Projects)
 
 [New Trends in Programming Languages](https://www.juliabloggers.com/new-trends-in-programming-languages/)
+
+[Think Julia](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html#_copyright)
