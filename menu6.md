@@ -220,73 +220,6 @@ L''\alpha''
 
 * The `using` statement is not allowed inside functions. If you really want to do it, add a `@eval` in the front of `using`.
 
-## Benchmarking tools
-
-Given its focus on performance, it should come as no surprise that both core Julia and the ecosystem provide a variety of tools for inspecting our code, looking for bottlenecks and measuring runtime and memory usage. One of the simplest is the `@time` macro. It takes an expression and then prints its execution time, number of allocations, and the total number of bytes the execution caused to be allocated, before returning the result of the expression. For example, note the following:
-
-```julia-repl
-julia> @time [x for x in 1:1_000_000]; 
-  0.031727 seconds (55.85 k allocations: 10.387 MiB)
-```
-
-Generating an array of one million integers by iterating from one to one million takes 0.03 seconds. Not bad, but what if I told you that we can do better --- much better? We just committed one of the cardinal sins of Julia—code should not be run (nor benchmarked) in the global scope. So, rule one --- always wrap your code into functions.
-
-The previous snippet can easily be refactored as follows:
-
-```julia-repl
-julia> function onetomil()  
-            [x for x in 1:1_000_000]
-       end 
-onetomil (generic function with 1 method) 
-```
-
-Now, the benchmark is as follows:
-
-```julia-repl
-julia> @time onetomil();
-  0.027002 seconds (65.04 k allocations: 10.914 MiB) 
-```
-
-All right, that's clearly faster --- but not much faster. However, what if we run the benchmark one more time?
-
-```julia-repl
-julia> @time onetomil();
-  0.002413 seconds (6 allocations: 7.630 MiB) 
-```
-
-Wow, that's an order of magnitude faster! So, what gives?
-
-Julia uses a just-in-time (JIT) compiler; that is, a function is compiled in real time when it is invoked for the first time. So, our initial benchmark also included the compilation time. This brings us to the second rule --- don't benchmark the first run.
-
-The best way to accurately measure the performance of a piece of code, thus, would be to execute it multiple times and then compute the mean. There is a great tool, specially designed for this use case, called `BenchmarkTools`. Let's add it and give it a try:
-
-```julia-repl
-julia> using BenchmarkTools 
-julia> @benchmark onetomil() 
-BenchmarkTools.Trial: 
-  memory estimate:  7.63 MiB 
-  allocs estimate:  2 
-  -------------- 
-  minimum time:     1.373 ms (0.00% GC) 
-  median time:      1.972 ms (0.00% GC) 
-  mean time:        2.788 ms (34.06% GC) 
-  maximum time:     55.129 ms (96.23% GC) 
-  -------------- 
-  samples:          1788 
-  evals/sample:     1 
-```
-
-We can also use the more compact `@btime` macro, which has an output similar to `@time`, but executes an equally comprehensive benchmark:
-
-```julia-repl
-julia> @btime onetomil(); 
-  1.363 ms (2 allocations: 7.63 MiB
-```
-
-[BenchmarkTools](https://github.com/JuliaCI/BenchmarkTools.jl/blob/master/doc/manual.md) exposes a very rich API and it's worth getting to know it well.
-
-One more thing to keep in mind here: timing by itself is very tricky. If doing inappropriately, you may only end up in timing the part you don't want (e.g. garbbage collection). Check the advices by experts!
-
 ## Type Stability
 
 If there is one thing that has a direct and massive impact on the performance of Julia code, it's the type system. And the most important thing about it is to write code that is **type-stable**. Type stability means that the type of a variable (including the return value of a function) must not vary with time or under different inputs. Understanding how to leverage type stability is key to writing fast software. Now that we know how to measure our code's execution time, we can see the effect of type instability with a few examples.
@@ -377,6 +310,75 @@ julia> @btime f2()
 ### Static arrays
 
 In the current implementation, working with large `StaticArrays` puts a lot of stress on the compiler, and becomes slower than `Base.Array` as the size increases. A very rough rule of thumb is that you should consider using a normal Array for arrays larger than 100 elements. 
+
+## Benchmarking tools
+
+Given its focus on performance, it should come as no surprise that both core Julia and the ecosystem provide a variety of tools for inspecting our code, looking for bottlenecks and measuring runtime and memory usage. One of the simplest is the `@time` macro. It takes an expression and then prints its execution time, number of allocations, and the total number of bytes the execution caused to be allocated, before returning the result of the expression. For example, note the following:
+
+```julia-repl
+julia> @time [x for x in 1:1_000_000]; 
+  0.031727 seconds (55.85 k allocations: 10.387 MiB)
+```
+
+Generating an array of one million integers by iterating from one to one million takes 0.03 seconds. Not bad, but what if I told you that we can do better --- much better? We just committed one of the cardinal sins of Julia—code should not be run (nor benchmarked) in the global scope. So, rule one --- always wrap your code into functions.
+
+The previous snippet can easily be refactored as follows:
+
+```julia-repl
+julia> function onetomil()  
+            [x for x in 1:1_000_000]
+       end 
+onetomil (generic function with 1 method) 
+```
+
+Now, the benchmark is as follows:
+
+```julia-repl
+julia> @time onetomil();
+  0.027002 seconds (65.04 k allocations: 10.914 MiB) 
+```
+
+All right, that's clearly faster --- but not much faster. However, what if we run the benchmark one more time?
+
+```julia-repl
+julia> @time onetomil();
+  0.002413 seconds (6 allocations: 7.630 MiB) 
+```
+
+Wow, that's an order of magnitude faster! So, what gives?
+
+Julia uses a just-in-time (JIT) compiler; that is, a function is compiled in real time when it is invoked for the first time. So, our initial benchmark also included the compilation time. This brings us to the second rule --- don't benchmark the first run.
+
+The best way to accurately measure the performance of a piece of code, thus, would be to execute it multiple times and then compute the mean. There is a great tool, specially designed for this use case, called `BenchmarkTools`. Let's add it and give it a try:
+
+```julia-repl
+julia> using BenchmarkTools 
+julia> @benchmark onetomil() 
+BenchmarkTools.Trial: 
+  memory estimate:  7.63 MiB 
+  allocs estimate:  2 
+  -------------- 
+  minimum time:     1.373 ms (0.00% GC) 
+  median time:      1.972 ms (0.00% GC) 
+  mean time:        2.788 ms (34.06% GC) 
+  maximum time:     55.129 ms (96.23% GC) 
+  -------------- 
+  samples:          1788 
+  evals/sample:     1 
+```
+
+We can also use the more compact `@btime` macro, which has an output similar to `@time`, but executes an equally comprehensive benchmark:
+
+```julia-repl
+julia> @btime onetomil(); 
+  1.363 ms (2 allocations: 7.63 MiB
+```
+
+[BenchmarkTools](https://github.com/JuliaCI/BenchmarkTools.jl/blob/master/doc/manual.md) exposes a very rich API and it's worth getting to know it well.
+
+For packages, there is a helper library [PkgBenchmark](https://github.com/JuliaCI/PkgBenchmark.jl) which let you define a suite of tests for benchmark. However, this timing really depends not only on the code itself, but also the testing environment, machine and setup.
+
+One more thing to keep in mind here: timing by itself is very tricky. If doing inappropriately, you may only end up in timing the part you don't want (e.g. garbbage collection). Check the advices by experts!
 
 ## Common Misunderstandings
 
