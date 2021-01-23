@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>Coding in Julia</title>
+  <title><![CDATA[Coding in Julia]]></title>
   <description><![CDATA[Julia programming notes
 ]]></description>
   <link>https://henry2004y.github.io/JuliaNotes/</link>
   <atom:link href="https://henry2004y.github.io/JuliaNotes/tag/syntax/feed.xml" rel="self" type="application/rss+xml" />
   <item>
-    <title>Common Questions</title>
+    <title><![CDATA[Common Questions]]></title>
     <link>https://henry2004y.github.io/JuliaNotes/menu1/</link>
     <description><![CDATA[Common questions concerning the language as rookies
 <br><a href="https://henry2004y.github.io/JuliaNotes/menu1/">Read more</a>]]></description>
@@ -14,7 +14,7 @@
     <pubDate>Fri, 6 Nov 2020 00:00:00 UT</pubDate>
   </item>
   <item>
-    <title>Julia Types</title>
+    <title><![CDATA[Julia Types]]></title>
     <link>https://henry2004y.github.io/JuliaNotes/menu2/</link>
     <description><![CDATA[Introduction to base Julia types
 <br><a href="https://henry2004y.github.io/JuliaNotes/menu2/">Read more</a>]]></description>
