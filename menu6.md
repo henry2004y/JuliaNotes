@@ -204,7 +204,7 @@ In this way, we can change some operations into a more readable form.
 
 * For the common loops, using `for i in 1:length(A)` is fine and equivalent to `for i in eachindex(A)`. However, if A is an `abstractArray` that may be a `subArray` (view of array) that includes some non-continuous indexing, using `eachindex` is better.
 
-* MATLAB `squeeze` is equivalent to `dropdims` in Julia.
+* MATLAB `squeeze` is equivalent to `dropdims` in Julia. However, improper use of `dropdims` may lead to 0-dimension arrays. There is a quite extensive discussion online about why exactly the same implementation of `squeeze` in Julia is not a good idea.
 
 * Julia has macros defined in package like Cascadia and [LaTeXStrings](https://github.com/stevengj/LaTeXStrings.jl):
 
