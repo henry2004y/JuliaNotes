@@ -212,6 +212,6 @@ There are supports to the SPMD through the package DistributedArray. However, cu
 
 1. I am still not sure about using MPI in Julia: since I can only do this in command line, does it mean that every time the code needs to be recompiled?
 
-I think the answer is yes.
+The answer is yes. This question reflects my misunderstanding of the underlying workflow. Every Julia function and type is compiled the first time it is executed. This has nothing to do with MPI, which is a standard for inter-process communication. MPI is implemented in C, so the MPI.jl package is basically calling the C library for sending/receiving data from other processors.
 
 Checkout more about CPU parallel computing in Julia in [ParallelJulia](https://github.com/henry2004y/ParallelJulia). 
