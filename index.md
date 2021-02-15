@@ -81,6 +81,8 @@ If you know the names of unsure functions and operators, type `?` in the Julia R
 In many circumstances you can find the solutions to your question online.
 In case you fail, people in the community are generally helpful. Most of them work across multiple languages and are very knowledgeable about programming techniques. Either ask questions on the [main Discourse](https://discourse.julialang.org/) or the [Chinese Discourse](https://discourse.juliacn.com/). For specific question about packages, go to their GitHub repositories and submit an issue.
 
+The language itself gets more stable after 1.0 release, but it's still changing relatively rapidly. Take a look at [What has changed since 1.0](https://www.oxinabox.net/2021/02/13/Julia-1.6-what-has-changed-since-1.0.html) for the new gradually evolving new features.
+
 ### References
 
 [Julia Programming Projects, Adrian Salceanu](https://github.com/PacktPublishing/Julia-Programming-Projects)
