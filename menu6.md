@@ -573,3 +573,5 @@ As similar mistakes happen so many time, I need to warn myself again: follow the
 * As of Julia 1.5, there is no way to switch off asserts in the code. Hopefully this feature will be added in the future.
 
 * The package management system still needs to be improved. Compatibility issues happen from time to time if I have already installed many packages.
+
+* Requires.jl is an amazing pkg that aims at solving the conditional dependency issue in the pkgs! I have applied it to Vlasiator.jl already, and it works like magic.

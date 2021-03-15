@@ -28,7 +28,11 @@ julia> using PyPlot
 ```
 
 However, that does not work for me.
-There seems to be some version and dependency issues with mixing Python and Julia.
+There seems to be some version and dependency issues when mixing Python and Julia.
+
+It is possible to pass Python and Julia objects back and forth. Some are just done for you, for example Numpy arrays are identical to native Julia types; some needs a little bit of extra work, like a self-defined Python class object. All the Python package wrappers demonstrate how to do this properly.
+
+Calling Julia from Python is also achieved with PyJulia. I would say it is still not in a very good shape (because Julia users don't care about calling from Python, and Python users don't want to bother with Julia).
 
 ## C
 
