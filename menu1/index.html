@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/JuliaNotes/libs/highlight/github.min.css"> <link rel=stylesheet  href="/JuliaNotes/css/franklin.css"> <link rel=stylesheet  href="/JuliaNotes/css/pure.css"> <link rel=stylesheet  href="/JuliaNotes/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/JuliaNotes/assets/favicon.png"> <title>Common Questions</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">Pure-SM</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/JuliaNotes/" class=pure-menu-link >Home</a> <li class="pure-menu-item pure-menu-selected"><a href="/JuliaNotes/menu1/" class=pure-menu-link >Questions</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu2/" class=pure-menu-link >Types</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu3/" class=pure-menu-link >Meta</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu4/" class=pure-menu-link >Parallel</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu5/" class=pure-menu-link >Interoperability</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu6/" class=pure-menu-link >Issues and Tricks</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu7/" class=pure-menu-link >Perception</a> </ul> </div> </div> <div id=main > <div class=header > <h1>Common Questions</h1> <h2>Notes taken during the learning process</h2> </div> <div class=franklin-content ><h1 id=language_features ><a href="#language_features" class=header-anchor >Language Features</a></h1> <div class=franklin-toc ><ol><li><a href="#multiple-dispatch_and_function_overloading">Multiple-dispatch and function overloading</a><li><a href="#objects">Objects</a><ol><li><a href="#objects_passing_behavior">Objects passing behavior</a></ol><li><a href="#type_conversion_and_variable_definition">Type conversion and variable definition</a><li><a href="#unicode_support">Unicode support</a><li><a href="#dot_operators">Dot operators</a><li><a href="#splat_operator">Splat operator</a><li><a href="#functions">Functions</a><li><a href="#scopes">Scopes</a><li><a href="#control_flow">Control Flow</a><ol><li><a href="#ternary_operator">Ternary operator</a><li><a href="#short-circuit_evaluation">Short-circuit evaluation</a><li><a href="#beware_of_operator_precedence">Beware of operator precedence</a></ol><li><a href="#gpu">GPU</a><li><a href="#live_evaluation_of_code_blocks">Live evaluation of code blocks</a></ol></div> <h2 id=multiple-dispatch_and_function_overloading ><a href="#multiple-dispatch_and_function_overloading" class=header-anchor >Multiple-dispatch and function overloading</a></h2> <p>One of the most common questions people ask when first learning Julia is: what is the difference between multiple-dispatch and function overloading? Here is a nice example for demonstrating the difference.</p> <p><pre><code class="julia hljs"><span class=hljs-keyword >abstract type</span> Pet <span class=hljs-keyword >end</span>
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/JuliaNotes/libs/highlight/github.min.css"> <link rel=stylesheet  href="/JuliaNotes/css/franklin.css"> <link rel=stylesheet  href="/JuliaNotes/css/pure.css"> <link rel=stylesheet  href="/JuliaNotes/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/JuliaNotes/assets/favicon.png"> <title>Common Questions</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">Pure-SM</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/JuliaNotes/" class=pure-menu-link >Home</a> <li class="pure-menu-item pure-menu-selected"><a href="/JuliaNotes/menu1/" class=pure-menu-link >Questions</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu2/" class=pure-menu-link >Types</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu3/" class=pure-menu-link >Meta</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu4/" class=pure-menu-link >Parallel</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu5/" class=pure-menu-link >Interoperability</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu6/" class=pure-menu-link >Issues and Tricks</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu7/" class=pure-menu-link >Perception</a> </ul> </div> </div> <div id=main > <div class=header > <h1>Common Questions</h1> <h2>Notes taken during the learning process</h2> </div> <div class=franklin-content ><h1 id=language_features ><a href="#language_features" class=header-anchor >Language Features</a></h1> <div class=franklin-toc ><ol><li><a href="#multiple-dispatch_and_function_overloading">Multiple-dispatch and function overloading</a><li><a href="#objects">Objects</a><ol><li><a href="#objects_passing_behavior">Objects passing behavior</a></ol><li><a href="#type_conversion_and_variable_definition">Type conversion and variable definition</a><li><a href="#unicode_support">Unicode support</a><li><a href="#dot_operators">Dot operators</a><li><a href="#splat_operator">Splat operator</a><li><a href="#functions">Functions</a><li><a href="#scopes">Scopes</a><li><a href="#control_flow">Control Flow</a><ol><li><a href="#ternary_operator">Ternary operator</a><li><a href="#short-circuit_evaluation">Short-circuit evaluation</a><li><a href="#beware_of_operator_precedence">Beware of operator precedence</a></ol><li><a href="#gpu">GPU</a><li><a href="#live_evaluation_of_code_blocks">Live evaluation of code blocks</a></ol></div> <h2 id=multiple-dispatch_and_function_overloading ><a href="#multiple-dispatch_and_function_overloading" class=header-anchor >Multiple-dispatch and function overloading</a></h2> <p>One of the most common questions people ask when first learning Julia is: what is the difference between multiple-dispatch and function overloading? Here is a nice example for demonstrating the difference.</p> <p>Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated. Deprecated as of 10.7.0. Please use highlight(code, options) instead. https://github.com/highlightjs/highlight.js/issues/2277 <pre><code class="julia hljs"><span class=hljs-keyword >abstract type</span> Pet <span class=hljs-keyword >end</span>
 <span class=hljs-keyword >struct</span> Dog &lt;: Pet
     name::<span class=hljs-built_in >String</span>
 <span class=hljs-keyword >end</span>
@@ -24,33 +24,33 @@ spots = Cat(<span class=hljs-string >&quot;Spots&quot;</span>)
 encounter(fido, rex)
 encounter(fido, whiskers)
 encounter(whiskers, rex)
-encounter(whiskers, spots)</code></pre> </p> <p>which gives: <pre><code class="plaintext hljs">Fido meets Rex and sniffs
+encounter(whiskers, spots)</code></pre> </p> <p>which gives: Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated. Deprecated as of 10.7.0. Please use highlight(code, options) instead. https://github.com/highlightjs/highlight.js/issues/2277 <pre><code class="plaintext hljs">Fido meets Rex and sniffs
 Fido meets Whiskers and chases
 Whiskers meets Rex and hisses
-Whiskers meets Spots and slinks</code></pre> </p> <p>The translation to C&#43;&#43;: <pre><code class="c++ hljs"><span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;iostream&gt;</span></span>
+Whiskers meets Spots and slinks</code></pre> </p> <p>The translation to C&#43;&#43;: Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated. Deprecated as of 10.7.0. Please use highlight(code, options) instead. https://github.com/highlightjs/highlight.js/issues/2277 <pre><code class="c++ hljs"><span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;iostream&gt;</span></span>
 <span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;string&gt;</span></span>
-<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> <span class=hljs-built_in >std</span>;
+<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> std;
 
 <span class=hljs-class ><span class=hljs-keyword >class</span> <span class=hljs-title >Pet</span>{</span>
    <span class=hljs-keyword >public</span>:
-      <span class=hljs-built_in >string</span> name;
+      string name;
 };
 
-<span class=hljs-function ><span class=hljs-built_in >string</span> <span class=hljs-title >meets</span><span class=hljs-params >(Pet a, Pet b)</span></span>{ <span class=hljs-keyword >return</span> <span class=hljs-string >&quot;FALLBACK&quot;</span>;}
+<span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Pet a, Pet b)</span></span>{ <span class=hljs-keyword >return</span> <span class=hljs-string >&quot;FALLBACK&quot;</span>;}
 
 <span class=hljs-function ><span class=hljs-keyword >void</span> <span class=hljs-title >encounter</span><span class=hljs-params >(Pet a, Pet b)</span></span>{
-   <span class=hljs-built_in >string</span> verb = meets(a, b);
-   <span class=hljs-built_in >cout</span> &lt;&lt; a.name &lt;&lt; <span class=hljs-string >&quot; meets&quot;</span>
-        &lt;&lt; b.name &lt;&lt; <span class=hljs-string >&quot; and &quot;</span> &lt;&lt; verb &lt;&lt; <span class=hljs-built_in >endl</span>;
+   string verb = <span class=hljs-built_in >meets</span>(a, b);
+   cout &lt;&lt; a.name &lt;&lt; <span class=hljs-string >&quot; meets&quot;</span>
+        &lt;&lt; b.name &lt;&lt; <span class=hljs-string >&quot; and &quot;</span> &lt;&lt; verb &lt;&lt; endl;
 }
 
 <span class=hljs-class ><span class=hljs-keyword >class</span> <span class=hljs-title >Dog</span> :</span> <span class=hljs-keyword >public</span> Pet {};
 <span class=hljs-class ><span class=hljs-keyword >class</span> <span class=hljs-title >Cat</span> :</span> <span class=hljs-keyword >public</span> Pet {};
 
-<span class=hljs-function ><span class=hljs-built_in >string</span> <span class=hljs-title >meets</span><span class=hljs-params >(Dog a, Dog b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;sniffs&quot;</span>;}
-<span class=hljs-function ><span class=hljs-built_in >string</span> <span class=hljs-title >meets</span><span class=hljs-params >(Dog a, Cat b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;chases&quot;</span>;}
-<span class=hljs-function ><span class=hljs-built_in >string</span> <span class=hljs-title >meets</span><span class=hljs-params >(Cat a, Dog b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;hisses&quot;</span>;}
-<span class=hljs-function ><span class=hljs-built_in >string</span> <span class=hljs-title >meets</span><span class=hljs-params >(Cat a, Cat b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;slinks&quot;</span>;}
+<span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Dog a, Dog b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;sniffs&quot;</span>;}
+<span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Dog a, Cat b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;chases&quot;</span>;}
+<span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Cat a, Dog b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;hisses&quot;</span>;}
+<span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Cat a, Cat b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;slinks&quot;</span>;}
 
 <span class=hljs-function ><span class=hljs-keyword >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span></span>{
    Dog fido, rex;
@@ -61,22 +61,28 @@ Whiskers meets Spots and slinks</code></pre> </p> <p>The translation to C&#43;&#
    whiskers.name = <span class=hljs-string >&quot;Whiskers&quot;</span>;
    spots.name = <span class=hljs-string >&quot;Spots&quot;</span>;
 
-   encounter(fido, rex);
-   encounter(fido, whiskers);
-   encounter(whiskers, rex);
-   encounter(whiskers, spots);
+   <span class=hljs-built_in >encounter</span>(fido, rex);
+   <span class=hljs-built_in >encounter</span>(fido, whiskers);
+   <span class=hljs-built_in >encounter</span>(whiskers, rex);
+   <span class=hljs-built_in >encounter</span>(whiskers, spots);
 
    <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>;
-}</code></pre> </p> <p>which gives: <pre><code class="c++ hljs">Fido meets Rex <span class=hljs-keyword >and</span> FALLBACK
+}</code></pre> </p> <p>which gives: Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated. Deprecated as of 10.7.0. Please use highlight(code, options) instead. https://github.com/highlightjs/highlight.js/issues/2277 <pre><code class="c++ hljs">Fido meets Rex <span class=hljs-keyword >and</span> FALLBACK
 Fido meets Whiskers <span class=hljs-keyword >and</span> FALLBACK
 Whiskers meets Rex <span class=hljs-keyword >and</span> FALLBACK
 Whiskers meets Spots <span class=hljs-keyword >and</span> FALLBACK
-</code></pre></p> <h2 id=objects ><a href="#objects" class=header-anchor >Objects</a></h2> <p>Like Python, everything is an object. Objects can be mutable or immutable, depending on if they can be modified after creation or not.</p> <h3 id=objects_passing_behavior ><a href="#objects_passing_behavior" class=header-anchor >Objects passing behavior</a></h3> <p>Indeed it is confusing to distinguish between pass-by-value, pass-by-reference, and pass-by-sharing. The behavior of Julia is similar to Python, but different from C. Briefly speaking, mutable and immutable objects behave differently, and it is often the immutable objects like <code>tuple</code> or <code>struct</code> that cause issues. Check <a href="https://www.python-course.eu/passing_arguments.php#:~:text&#61;Correctly&#37;20speaking&#37;2C&#37;20Python&#37;20uses&#37;20a,like&#37;20call&#37;2Dby&#37;2Dvalue.">this Python course</a> for details.</p> <p>Previously I had some misunderstandings about Julia functions, especially about the argument passing behaviour. Strictly speaking, Julia is <strong>call-by-value where the value is a reference</strong>, or <strong>call-by-sharing</strong>, as used by most languages. This means that even without a &quot;&#33;&quot; mark, the arrays are passed-by-reference, and scalars are passed-by-value. The exclamation mark <code>&#33;</code> is just a convention for programmers to notify that a function may change the arguments, but it does not necessarily do anything to force it.</p> <p>A common mistake/bug is that you assign part of an array to another variable, and modify the other one.</p> <p>The confusion stems from this: assignment and mutation are not the same thing. Quoted from Steven on StackOverFlow:</p> <ul> <li><p>Assignment. Assignment looks like <code>x &#61; ...</code> –- what&#39;s left of the <code>&#61;</code> is an identifier, i.e. a variable name. Assignment changes which object the variable <code>x</code> refers to &#40;this is called a variable binding&#41;. It does not mutate any objects at all.</p> <li><p>Mutation. There are two typical ways to mutate something in Julia: <code>x.f &#61; ...</code> –- what&#39;s left of the <code>&#61;</code> is a field access expression; <code>x&#91;i&#93; &#61; ...</code> –- what&#39;s left of the <code>&#61;</code> is an indexing expression. Currently, field mutation is fundamental –- that syntax can only mean that you are mutating a structure by changing its field. This may change. Array mutation syntax is not fundamental –- <code>x&#91;i&#93; &#61; y</code> means <code>setindex&#33;&#40;x, y, i&#41;</code> and you can either add methods to <code>setindex&#33;</code> or locally change which generic function <code>setindex&#33;</code>. Actual array assignment is a builtin –- a function implemented in C &#40;and for which we know how to generate corresponding LLVM code&#41;.</p> </ul> <p>Mutation changes the values of objects; it doesn&#39;t change any variable bindings. After doing either of the above, the variable <code>x</code> still refers to the same object it did before; that object may have different contents, however. In particular, if that object is accessible from some other scope –– say the function that called one doing the mutation –- then the changed value will be visible there. But no bindings have changed –- all bindings in all scopes still refer to the same objects.</p> <p>You&#39;ll note that in this explanation I never once talked about mutability or immutability. That&#39;s because it has nothing to do with any of this –- mutable and immutable objects have exactly the same semantics when it comes to assignment, argument passing, etc. The only difference is that if you try to do <code>x.f &#61; ...</code> when x is immutable, you will get an error.</p> <h2 id=type_conversion_and_variable_definition ><a href="#type_conversion_and_variable_definition" class=header-anchor >Type conversion and variable definition</a></h2> <p>Julia inference system is smart enough to output</p> <pre><code class="julia hljs"><span class=hljs-number >5</span> / <span class=hljs-number >2</span></code></pre>
+</code></pre></p> <h2 id=objects ><a href="#objects" class=header-anchor >Objects</a></h2> <p>Like Python, everything is an object. Objects can be mutable or immutable, depending on if they can be modified after creation or not.</p> <h3 id=objects_passing_behavior ><a href="#objects_passing_behavior" class=header-anchor >Objects passing behavior</a></h3> <p>Indeed it is confusing to distinguish between pass-by-value, pass-by-reference, and pass-by-sharing. The behavior of Julia is similar to Python, but different from C. Briefly speaking, mutable and immutable objects behave differently, and it is often the immutable objects like <code>tuple</code> or <code>struct</code> that cause issues. Check <a href="https://www.python-course.eu/passing_arguments.php#:~:text&#61;Correctly&#37;20speaking&#37;2C&#37;20Python&#37;20uses&#37;20a,like&#37;20call&#37;2Dby&#37;2Dvalue.">this Python course</a> for details.</p> <p>Previously I had some misunderstandings about Julia functions, especially about the argument passing behaviour. Strictly speaking, Julia is <strong>call-by-value where the value is a reference</strong>, or <strong>call-by-sharing</strong>, as used by most languages. This means that even without a &quot;&#33;&quot; mark, the arrays are passed-by-reference, and scalars are passed-by-value. The exclamation mark <code>&#33;</code> is just a convention for programmers to notify that a function may change the arguments, but it does not necessarily do anything to force it.</p> <p>A common mistake/bug is that you assign part of an array to another variable, and modify the other one.</p> <p>The confusion stems from this: assignment and mutation are not the same thing. Quoted from Steven on StackOverFlow:</p> <ul> <li><p>Assignment. Assignment looks like <code>x &#61; ...</code> –- what&#39;s left of the <code>&#61;</code> is an identifier, i.e. a variable name. Assignment changes which object the variable <code>x</code> refers to &#40;this is called a variable binding&#41;. It does not mutate any objects at all.</p> <li><p>Mutation. There are two typical ways to mutate something in Julia: <code>x.f &#61; ...</code> –- what&#39;s left of the <code>&#61;</code> is a field access expression; <code>x&#91;i&#93; &#61; ...</code> –- what&#39;s left of the <code>&#61;</code> is an indexing expression. Currently, field mutation is fundamental –- that syntax can only mean that you are mutating a structure by changing its field. This may change. Array mutation syntax is not fundamental –- <code>x&#91;i&#93; &#61; y</code> means <code>setindex&#33;&#40;x, y, i&#41;</code> and you can either add methods to <code>setindex&#33;</code> or locally change which generic function <code>setindex&#33;</code>. Actual array assignment is a builtin –- a function implemented in C &#40;and for which we know how to generate corresponding LLVM code&#41;.</p> </ul> <p>Mutation changes the values of objects; it doesn&#39;t change any variable bindings. After doing either of the above, the variable <code>x</code> still refers to the same object it did before; that object may have different contents, however. In particular, if that object is accessible from some other scope –– say the function that called one doing the mutation –- then the changed value will be visible there. But no bindings have changed –- all bindings in all scopes still refer to the same objects.</p> <p>You&#39;ll note that in this explanation I never once talked about mutability or immutability. That&#39;s because it has nothing to do with any of this –- mutable and immutable objects have exactly the same semantics when it comes to assignment, argument passing, etc. The only difference is that if you try to do <code>x.f &#61; ...</code> when x is immutable, you will get an error.</p> <h2 id=type_conversion_and_variable_definition ><a href="#type_conversion_and_variable_definition" class=header-anchor >Type conversion and variable definition</a></h2> <p>Julia inference system is smart enough to output</p> Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated. Deprecated as of 10.7.0. Please use highlight(code, options) instead. https://github.com/highlightjs/highlight.js/issues/2277 <pre><code class="julia hljs"><span class=hljs-number >5</span> / <span class=hljs-number >2</span></code></pre>
 <p>as</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs"><span class=hljs-number >2.5</span></code></pre>
 <p>As a common potential issue for dynamic languages, due to the lack of requirement of variable definition, implicit type conversion as well as surprising temporary memory allocation of intermediate variables may happen and is hard to debug/optimize. This is really a double-edge sword, so be careful to make good use of it&#33;</p>
 <h2 id=unicode_support ><a href="#unicode_support" class=header-anchor >Unicode support</a></h2>
 <p>As a math-friendly language, Julia has nice integrated support for Unicode-8. This means that not only you can use greek letters with sub/super-script for variable names, but also frequently you can see more than one syntax of expressing the same result, such as</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">(∈, <span class=hljs-keyword >in</span>)
 ((f ∘ g)(args...), f(g(args...)))</code></pre>
 <p>and many others.</p>
@@ -93,17 +99,32 @@ Whiskers meets Spots <span class=hljs-keyword >and</span> FALLBACK
 <h2 id=splat_operator ><a href="#splat_operator" class=header-anchor >Splat operator</a></h2>
 <p>Sometime you will see this <code>...</code> operator: it is called splat. It is often handy to &quot;splat&quot; the values contained in an iterable collection into a function call as individual arguments.</p>
 <p>A range can be expanded into its corresponding values by using the splat operator <code>...</code>. For example, we can splat it into a tuple:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs"><span class=hljs-meta >@show</span> (<span class=hljs-number >20</span>:-<span class=hljs-number >5</span>:-<span class=hljs-number >20.</span>..,)</code></pre>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="plaintext hljs">(20:-5:-20...,) = (20, 15, 10, 5, 0, -5, -10, -15, -20)
 </code></pre>
 <p>We can also splat it into a list:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs"><span class=hljs-meta >@show</span> [<span class=hljs-number >1</span>:<span class=hljs-number >10.</span>..]</code></pre>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="plaintext hljs">[1:10...] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 </code></pre>
 <h2 id=functions ><a href="#functions" class=header-anchor >Functions</a></h2>
 <p>Note the ending exclamation mark &#33; for some functions. These are perfectly legal function name in Julia. It is a <strong>convention</strong> to warn that the function is mutating–-that is, it will modify the data passed as argument to it, instead of returning a new value.</p>
 <h2 id=scopes ><a href="#scopes" class=header-anchor >Scopes</a></h2>
 <p>It&#39;s very important to keep in mind that <code>if</code> blocks do not introduce local scope. That is, variables defined within them will be accessible after the block is exited &#40;of course, provided that the respective branch has been evaluated&#41;:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">status = <span class=hljs-keyword >if</span> x &lt; <span class=hljs-number >0</span> 
             <span class=hljs-string >&quot;x is a negative number&quot;</span> 
          <span class=hljs-keyword >elseif</span> x &gt; <span class=hljs-number >0</span> 
@@ -115,6 +136,9 @@ Whiskers meets Spots <span class=hljs-keyword >and</span> FALLBACK
 y</code></pre>
 <p>We can see here that the <code>y</code> variable, initialized within the <code>elseif</code> block, is still accessible outside the conditional expression.</p>
 <p>This can be avoided if we declare the variable to be local:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">status = <span class=hljs-keyword >if</span> x &lt; <span class=hljs-number >0</span> 
             <span class=hljs-string >&quot;x is a negative number&quot;</span> 
          <span class=hljs-keyword >elseif</span> x &gt; <span class=hljs-number >0</span> 
@@ -128,23 +152,44 @@ z <span class=hljs-comment ># UndefVarError: z not defined</span></code></pre>
 <h3 id=ternary_operator ><a href="#ternary_operator" class=header-anchor >Ternary operator</a></h3>
 <p>Similar to C, an <code>if,then and else</code> type of condition can be expressed using the ternary operator <code>? :</code>.</p>
 <p>For instance, </p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x = <span class=hljs-number >10</span>
 x &lt; <span class=hljs-number >0</span> ? <span class=hljs-string >&quot;negative&quot;</span> : <span class=hljs-string >&quot;positive&quot;</span></code></pre>
 <h3 id=short-circuit_evaluation ><a href="#short-circuit_evaluation" class=header-anchor >Short-circuit evaluation</a></h3>
 <p>Julia provides an even more concise type of evaluation –- short-circuit evaluation &#40;exactly the same thing as in MATLAB&#41;. In a series of Boolean expressions connected by <code>&amp;&amp;</code> and <code>||</code> operators, only the minimum number of expressions are evaluated—as many as are necessary in order to determine the final Boolean value of the entire chain. We can exploit this to return certain values, depending on what gets to be evaluated. For instance:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x = <span class=hljs-number >10</span>
 x &gt; <span class=hljs-number >5</span> &amp;&amp; <span class=hljs-string >&quot;bigger than 5&quot;</span> <span class=hljs-comment ># &quot;bigger than 5&quot;</span></code></pre>
 <p>In an expression <code>A &amp;&amp; B</code>, the second expression B is only evaluated if and only if A evaluates to true. In this case, the whole expression has the return value of the sub-expression B, which in the previous example is bigger than 5.</p>
 <p>If, on the contrary, A evaluates to false, B does not get evaluated at all. Thus, beware –- the whole expression will return a false Boolean &#40;not a string&#33;&#41;:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x &gt; <span class=hljs-number >15</span> &amp;&amp; <span class=hljs-string >&quot;bigger than 15&quot;</span></code></pre>
 <p>The same logic applies to the logical or operator, <code>||</code>:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x &lt; <span class=hljs-number >5</span> || <span class=hljs-string >&quot;greater than 5&quot;</span></code></pre>
 <p>In an expression <code>A || B</code>, the second expression B is only evaluated if A evaluates to false. The same logic applies when the first sub-expression is evaluated to true; true will be the return value of the whole expression:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x &gt; <span class=hljs-number >5</span> || <span class=hljs-string >&quot;less than 5&quot;</span></code></pre>
 <h3 id=beware_of_operator_precedence ><a href="#beware_of_operator_precedence" class=header-anchor >Beware of operator precedence</a></h3>
 <p>Sometimes short-circuit expressions can confuse the compiler, resulting in errors or unexpected results. For example, short-circuit expressions are often used with assignment operations, as follows:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x &gt; <span class=hljs-number >15</span> || message = <span class=hljs-string >&quot;That&#x27;s a lot&quot;</span></code></pre>
 <p>This will fail with the syntax: <code>invalid assignment location &quot;&#40;x &gt; 15&#41; || message</code> error because the <code>&#61;</code> assignment operator has higher precedence than logical <code>or</code> and <code>||</code>. It can easily be fixed by using brackets to explicitly control the evaluation order:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs">x &gt; <span class=hljs-number >15</span> || (message = <span class=hljs-string >&quot;That&#x27;s a lot&quot;</span>)</code></pre>
 <p>It&#39;s something to keep in mind as it&#39;s a common source of errors for beginners.</p>
 <h2 id=gpu ><a href="#gpu" class=header-anchor >GPU</a></h2>
@@ -154,17 +199,23 @@ x &gt; <span class=hljs-number >5</span> &amp;&amp; <span class=hljs-string >&qu
 <p>If you would like to show code as well as what the code outputs, you only need to specify where the script corresponding to the code block will be saved.</p>
 <p>Indeed, what happens is that the code block gets saved as a script which then gets executed. This also allows for that block to not be re-executed every time you change something <em>else</em> on the page.</p>
 <p>Here&#39;s a simple example &#40;change values in <code>a</code> to see the results being live updated&#41;:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> LinearAlgebra
 a = [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >3</span>, <span class=hljs-number >4</span>, <span class=hljs-number >5</span>, <span class=hljs-number >2</span>, <span class=hljs-number >2</span>]
 <span class=hljs-meta >@show</span> dot(a, a)
 println(dot(a, a))</code></pre>
 <p>You can now show what this would look like:</p>
+Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.
+Deprecated as of 10.7.0. Please use highlight(code, options) instead.
+https://github.com/highlightjs/highlight.js/issues/2277
 <pre><code class="plaintext hljs">dot(a, a) = 72
 72
 </code></pre>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: March 17, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: March 23, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
