@@ -181,7 +181,7 @@ Less than 1 MB and a quarter of the number of allocations. The difference will b
 
 ### Dictionaries
 
-The dictionary, called `Dict`, is one of Julia's most powerful and versatile data structures. It's an associative collection --- it associates keys with values. You can think of a `Dict` as a look-up table implementation --- given a single piece of information, the key, it will return the corresponding value.
+The dictionary, called `Dict`, is one of Julia's versatile data structures. It's an associative collection --- it associates keys with values. You can think of a `Dict` as a look-up table implementation --- given a single piece of information, the key, it will return the corresponding value.
 
 `Pairs` are one of the building blocks of Julia and can be used, among other things, for creating dictionaries.
  The compiler will do its best to infer the type of the collection from the types of its parts.
@@ -265,6 +265,10 @@ Removing a key-value Pair is just a matter of invoking `delete!` (note the prese
 d = Dict(zip("abc",1:3))
 for (key,value) in d println(key," ", value)
 ```
+
+I have encountered the performance penalty involving dictionaries several times in Julia.
+I feel like the type-inference does not work well with dictionaries when the values contain non-concrete types.
+It would be better to learn about this!
 
 #### Ordered dictionaries
 

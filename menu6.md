@@ -510,6 +510,8 @@ end
 ```
 
 The second version is much faster than the first classical version because of the reuse of already known values.
+There is a library for implementing a macro for memoization.
+Similarly in Python, there is a decorator from functools for the same purpose.
 
 * Julia 1.0 does not support `copy!`, but it does in Julia 1.1+. As a workaround, you can use `a .= b` instead of `copy!(a,b)`. Note that `a = b` won't work here if `a` is immutable.
 
@@ -575,3 +577,5 @@ As similar mistakes happen so many time, I need to warn myself again: follow the
 * The package management system still needs to be improved. Compatibility issues happen from time to time if I have already installed many packages.
 
 * Requires.jl is an amazing pkg that aims at solving the conditional dependency issue in the pkgs! I have applied it to Vlasiator.jl already, and it works like magic.
+
+* Be careful with dictionaries, especially in performance-critical part. In my reimplementation of the classical Vlasov 1D-1V solver from C++, it is 3 times slower than C++ when dictionary is used to store variables and 2 time faster than C++ when dictionary is avoided.
