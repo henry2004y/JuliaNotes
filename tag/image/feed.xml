@@ -1,27 +1,61 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-<channel>
-  <title><![CDATA[Coding in Julia]]></title>
-  <description><![CDATA[Julia programming notes
-]]></description>
-  <link>https://henry2004y.github.io/JuliaNotes/</link>
-  <atom:link href="https://henry2004y.github.io/JuliaNotes/tag/image/feed.xml" rel="self" type="application/rss+xml" />
-  <item>
-    <title><![CDATA[Julia perception]]></title>
-    <link>https://henry2004y.github.io/JuliaNotes/menu7/</link>
-    <description><![CDATA[Personal perception to Julia
-<br><a href="https://henry2004y.github.io/JuliaNotes/menu7/">Read more</a>]]></description>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:georss="http://www.georss.org/georss">
+
+  <channel>
+    <title>
+      <![CDATA[  {{fd2rss website_title}}  ]]>
+    </title>
+    <link> {{website_url}} </link>
+    <description>
+      <![CDATA[  {{fd2rss website_description}}  ]]>
+    </description>
+    <atom:link
+      href="{{fd_rss_feed_url}}"
+      rel="self"
+      type="application/rss+xml" />
+
+
+<item>
+  <title>
+    <![CDATA[  Julia perception  ]]>
+  </title>
+  <link> https://henry2004y.github.io/JuliaNotes/menu7/index.html </link>
+  <guid> https://henry2004y.github.io/JuliaNotes/menu7/index.html </guid>
+  <description>
+    <![CDATA[  Personal perception to Julia  ]]>
+  </description>  
     
-    <guid>https://henry2004y.github.io/JuliaNotes/menu7/</guid>
-    <pubDate>Thu, 11 Feb 2021 00:00:00 UT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Julia Types]]></title>
-    <link>https://henry2004y.github.io/JuliaNotes/menu2/</link>
-    <description><![CDATA[Introduction to base Julia types
-<br><a href="https://henry2004y.github.io/JuliaNotes/menu2/">Read more</a>]]></description>
+  <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>Hongyang Zhou</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  Julia Types  ]]>
+  </title>
+  <link> https://henry2004y.github.io/JuliaNotes/menu2/index.html </link>
+  <guid> https://henry2004y.github.io/JuliaNotes/menu2/index.html </guid>
+  <description>
+    <![CDATA[  Introduction to base Julia types  ]]>
+  </description>  
     
-    <guid>https://henry2004y.github.io/JuliaNotes/menu2/</guid>
-    <pubDate>Fri, 6 Nov 2020 00:00:00 UT</pubDate>
-  </item>
-</channel>
-</rss>
+  <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>Hongyang Zhou</atom:name>
+  </atom:author>
+        
+</item>
+</channel></rss>
