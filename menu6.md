@@ -579,3 +579,5 @@ As similar mistakes happen so many time, I need to warn myself again: follow the
 * Requires.jl is an amazing pkg that aims at solving the conditional dependency issue in the pkgs! I have applied it to Vlasiator.jl already, and it works like magic.
 
 * Be careful with dictionaries, especially in performance-critical part. In my reimplementation of the classical Vlasov 1D-1V solver from C++, it is 3 times slower than C++ when dictionary is used to store variables and 2 time faster than C++ when dictionary is avoided.
+
+* Over-constraining argument types is considered as an antipattern in Julia. The key reason for specifying argument types in Julia is multi-dispatch. In fact, specifying argument types for many functions does not improve performance, which is a common misunderstanding of Julia's JIT compiler. See more discussions [here](https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html).

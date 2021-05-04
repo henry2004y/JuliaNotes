@@ -266,22 +266,28 @@ d = Dict(zip("abc",1:3))
 for (key,value) in d println(key," ", value)
 ```
 
-I have encountered the performance penalty involving dictionaries several times in Julia.
-I feel like the type-inference does not work well with dictionaries when the values contain non-concrete types.
-It would be better to learn about this!
+#### Remarks on dictionaries
+
+I have encountered many performance penalties involving dictionaries in Julia, especially when porting codes from Python.
+In practice, there are several alternative data structures that provide us with much better performance than a general dictionary.
+Take a look at the dictionary discussion session in [this post](https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html).
+TL;DR: consider [LittleDict](https://github.com/JuliaCollections/OrderedCollections.jl/) or named tuple instead!
 
 #### Ordered dictionaries
 
 If you ever need your dictionaries to stay ordered, you can use the `DataStructures` [package](https://github.com/JuliaCollections/DataStructures.jl), specifically the `OrderedDict`.
 
 
-### Iterations
+### Iterators
 
-The simplest way to iterate over an array is with the `for` construct. If you also need the index while iterating, Julia exposes the `eachindex(yourarray)` iterator.
+The simplest way to iterate over an array is with the `for` construct. If you also need the index while iterating, Julia exposes the `eachindex(yourarray)` iterator, which is commonly seen in Python, and now some newer C++.
 
-This is mostly seen in Python, and now some newer C++.
+Iterables are objects one can iterate on, like lists or other types of collections. Unlike collections however, iterables do not hold all elements in memory: instead, they only need to be able to generate them in sequence, one after the other. They’re like lazy collections.
 
-### Ranges
+Range, for example, is a common iterator type being used. Compared with vectors, they save a lot of memory.
+
+I strongly recommend reading this enlightening post [Iterators For Iterative Methods](https://lostella.github.io/2018/07/25/iterative-methods-done-right.html). You will be amazed by how a job can be done in such an elegant method.
+
 
 ### Strings
 

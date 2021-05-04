@@ -164,4 +164,6 @@ Besides they're very powerful, macros are also very convenient. They can provide
 @time rand(1000); # 0.000007 seconds (5 allocations: 8.094 KiB) 
 ```
 
+However, **most of the time, don't do metaprogramming**! The primary purpose of macros is not performance: it is to allow syntax transformations. Don't try to think that you can easily beat a modern compiler! More in depth explanations can be found in [this post](https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html) and [Steve Johnson's talk at JuliaCon2019](https://www.youtube.com/watch?v=mSgXWpvQEHE).
+
 Macros --- and metaprogramming in general --- are powerful concepts that require whole books to discuss at length. For more, going over the [official documentation](https://docs.julialang.org/en/stable/manual/metaprogramming/).
