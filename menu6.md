@@ -581,3 +581,28 @@ As similar mistakes happen so many time, I need to warn myself again: follow the
 * Be careful with dictionaries, especially in performance-critical part. In my reimplementation of the classical Vlasov 1D-1V solver from C++, it is 3 times slower than C++ when dictionary is used to store variables and 2 time faster than C++ when dictionary is avoided.
 
 * Over-constraining argument types is considered as an antipattern in Julia. The key reason for specifying argument types in Julia is multi-dispatch. In fact, specifying argument types for many functions does not improve performance, which is a common misunderstanding of Julia's JIT compiler. See more discussions [here](https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html).
+
+* To import a main module function into a submodule:
+```julia
+module SuperModule
+   # Define `foo()` but don't give it any methods yet
+   function foo end
+      
+   # You can put this into SubModule.jl and do 
+   # include("SubModule.jl") here, but I'm including 
+   # it inline for this simple example.
+   module SubModule1
+     # Explicitly indicate that this is the *same* foo as in SuperModule
+     import ..foo
+           
+     foo(x::Int) = println("hello Int")
+   end
+
+   module SubModule2
+     import ..foo
+     
+     foo(x::Float64) = println("hello Float64")
+   end
+end
+```
+Remember that the imported functions must be defined before the submodules, otherwise Julia will warn you with "not found".
