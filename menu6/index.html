@@ -361,7 +361,7 @@ b = <span class=hljs-number >2</span></code></pre>
 <span class=hljs-meta >julia&gt;</span><span class=julia > a</span></code></pre>
 <p>is different, because array is mutable object. Therefore the value of a should be <code>&#91;2,2&#93;</code>.</p>
 <ul>
-<li><p>Arrays and vectors are tricky.</p>
+<li><p>Arrays and vectors are tricky. Be careful about singleton dimensions&#33;</p>
 
 </ul>
 <pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = [<span class=hljs-string >&quot;1&quot;</span>,<span class=hljs-string >&quot;2&quot;</span>]
@@ -374,6 +374,8 @@ b = <span class=hljs-number >2</span></code></pre>
 </span>
 <span class=hljs-meta >julia&gt;</span><span class=julia > reshape(a,<span class=hljs-number >1</span>,:)</span></code></pre>
 <ul>
+<li><p><code>reshape</code> function does not allocate new memory&#33; The indexes can only be Int64 on a 64bit machine and Int32 on a 32bit machine. See the <a href="https://github.com/JuliaLang/julia/issues/311">reason</a> behind this decision by Stefan and Jeff.</p>
+
 <li><p>Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like </p>
 
 </ul>
@@ -572,7 +574,7 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 <p>Remember that the imported functions must be defined before the submodules, otherwise Julia will warn you with &quot;not found&quot;.</p>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: May 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: May 18, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
