@@ -427,7 +427,7 @@ julia> a
 
 is different, because array is mutable object. Therefore the value of a should be `[2,2]`.
 
-* Arrays and vectors are tricky.
+* Arrays and vectors are tricky. Be careful about singleton dimensions!
 
 ```julia-repl
 julia> a = ["1","2"]
@@ -436,6 +436,7 @@ julia> a = ["1";"2"]
 julia> reshape(a,:,1)
 julia> reshape(a,1,:)
 ```
+* `reshape` function does not allocate new memory! The indexes can only be Int64 on a 64bit machine and Int32 on a 32bit machine. See the [reason](https://github.com/JuliaLang/julia/issues/311) behind this decision by Stefan and Jeff.
 * Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like 
 
 ```julia-repl
