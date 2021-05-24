@@ -311,6 +311,10 @@ julia> @btime f2()
 
 In the current implementation, working with large `StaticArrays` puts a lot of stress on the compiler, and becomes slower than `Base.Array` as the size increases. A very rough rule of thumb is that you should consider using a normal Array for arrays larger than 100 elements. 
 
+### Heap vs stack
+
+Remember tha mutable objects like arrays are allocated on the heap, while immutable objects like tuple and static arrays are allocated on the stack. This will cause performance differences especially inside loop kernels!
+
 ## Benchmarking tools
 
 Given its focus on performance, it should come as no surprise that both core Julia and the ecosystem provide a variety of tools for inspecting our code, looking for bottlenecks and measuring runtime and memory usage. One of the simplest is the `@time` macro. It takes an expression and then prints its execution time, number of allocations, and the total number of bytes the execution caused to be allocated, before returning the result of the expression. For example, note the following:
