@@ -27,32 +27,32 @@ encounter(whiskers, rex)
 encounter(whiskers, spots)</code></pre> </p> <p>which gives: <pre><code class="plaintext hljs">Fido meets Rex and sniffs
 Fido meets Whiskers and chases
 Whiskers meets Rex and hisses
-Whiskers meets Spots and slinks</code></pre> </p> <p>The translation to C&#43;&#43;: <pre><code class="c++ hljs"><span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;iostream&gt;</span></span>
-<span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;string&gt;</span></span>
+Whiskers meets Spots and slinks</code></pre> </p> <p>The translation to C&#43;&#43;: <pre><code class="c++ hljs"><span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;iostream&gt;</span></span>
+<span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;string&gt;</span></span>
 <span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> std;
 
-<span class=hljs-class ><span class=hljs-keyword >class</span> <span class=hljs-title >Pet</span>{</span>
+<span class=hljs-keyword >class</span> <span class="hljs-title class_">Pet</span>{
    <span class=hljs-keyword >public</span>:
       string name;
 };
 
 <span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Pet a, Pet b)</span></span>{ <span class=hljs-keyword >return</span> <span class=hljs-string >&quot;FALLBACK&quot;</span>;}
 
-<span class=hljs-function ><span class=hljs-keyword >void</span> <span class=hljs-title >encounter</span><span class=hljs-params >(Pet a, Pet b)</span></span>{
+<span class=hljs-function ><span class=hljs-type >void</span> <span class=hljs-title >encounter</span><span class=hljs-params >(Pet a, Pet b)</span></span>{
    string verb = <span class=hljs-built_in >meets</span>(a, b);
    cout &lt;&lt; a.name &lt;&lt; <span class=hljs-string >&quot; meets&quot;</span>
         &lt;&lt; b.name &lt;&lt; <span class=hljs-string >&quot; and &quot;</span> &lt;&lt; verb &lt;&lt; endl;
 }
 
-<span class=hljs-class ><span class=hljs-keyword >class</span> <span class=hljs-title >Dog</span> :</span> <span class=hljs-keyword >public</span> Pet {};
-<span class=hljs-class ><span class=hljs-keyword >class</span> <span class=hljs-title >Cat</span> :</span> <span class=hljs-keyword >public</span> Pet {};
+<span class=hljs-keyword >class</span> <span class="hljs-title class_">Dog</span> : <span class=hljs-keyword >public</span> Pet {};
+<span class=hljs-keyword >class</span> <span class="hljs-title class_">Cat</span> : <span class=hljs-keyword >public</span> Pet {};
 
 <span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Dog a, Dog b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;sniffs&quot;</span>;}
 <span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Dog a, Cat b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;chases&quot;</span>;}
 <span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Cat a, Dog b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;hisses&quot;</span>;}
 <span class=hljs-function >string <span class=hljs-title >meets</span><span class=hljs-params >(Cat a, Cat b)</span> </span>{<span class=hljs-keyword >return</span> <span class=hljs-string >&quot;slinks&quot;</span>;}
 
-<span class=hljs-function ><span class=hljs-keyword >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span></span>{
+<span class=hljs-function ><span class=hljs-type >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span></span>{
    Dog fido, rex;
    Cat whiskers, spots;
 
@@ -164,7 +164,7 @@ println(dot(a, a))</code></pre>
 </code></pre>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: May 24, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: June 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>

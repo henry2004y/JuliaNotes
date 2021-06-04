@@ -3,10 +3,10 @@
 <pre><code class="julia-repl hljs">broadcast(v -&gt; exp(sin(cos(log(v)))), 1:100)</code></pre>
 <p>The consequence is that there is only one allocation of memory to produce the final result of the operation. In standard scripting languages, each step of the computation would typically use up new memory. This is both computationally inefficient and memory expensive. Such seemingly minor details make Julia shine in numerical computing applications.</p>
 <p>I am so used to the MATLAB style of vectorization, so I usually write the code like</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > lat.f[<span class=hljs-number >1</span>,<span class=hljs-number >1</span>,:] = (w[<span class=hljs-number >1</span>]+w[<span class=hljs-number >3</span>])*T[<span class=hljs-number >1</span>] .- lat.f[<span class=hljs-number >3</span>,<span class=hljs-number >1</span>,:]</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > lat.f[<span class=hljs-number >1</span>,<span class=hljs-number >1</span>,:] = (w[<span class=hljs-number >1</span>]+w[<span class=hljs-number >3</span>])*T[<span class=hljs-number >1</span>] .- lat.f[<span class=hljs-number >3</span>,<span class=hljs-number >1</span>,:]</span></code></pre>
 <p>Actually in MATLAB you don&#39;t even need the dot operation for plus and minus. However, in Julia any fusion operation requires the explicit dot operation, even the equal sign&#33; So the above example may not be optimal as you would expect: it is a copy instead of in-place operation&#33;</p>
 <p>The correct one should be:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > lat.f[<span class=hljs-number >1</span>,<span class=hljs-number >1</span>,:] .= (w[<span class=hljs-number >1</span>]+w[<span class=hljs-number >3</span>])*T[<span class=hljs-number >1</span>] .- lat.f[<span class=hljs-number >3</span>,<span class=hljs-number >1</span>,:]</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > lat.f[<span class=hljs-number >1</span>,<span class=hljs-number >1</span>,:] .= (w[<span class=hljs-number >1</span>]+w[<span class=hljs-number >3</span>])*T[<span class=hljs-number >1</span>] .- lat.f[<span class=hljs-number >3</span>,<span class=hljs-number >1</span>,:]</span></code></pre>
 <p>See an elegant and detailed <a href="https://julialang.org/blog/2017/01/moredots">description to the dot operations</a> by Steven Johnson, a professor at MIT.</p>
 <ul>
 <li><p>By default, a plot will not show up automatically inside a function. It is only displayed when it&#39;s returned. Otherwise, you can use, e.g., <code>display&#40;plot&#40;f, -3, 3&#41;&#41;</code> to show the plot.</p>
@@ -20,21 +20,21 @@
 <li><p>If the string also includes quotes, we can escape these by prefixing them with a backslash:</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;Beta is Latin for \&quot;still doesn&#x27;t work\&quot;.&quot;</span></span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;Beta is Latin for \&quot;still doesn&#x27;t work\&quot;.&quot;</span></span></code></pre>
 <p>However, escaping can get messy, so there&#39;s a much better way of dealing with this –- by using triple quotes &quot;&quot;&quot;...&quot;&quot;&quot;.</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;&quot;&quot;Beta is Latin for &quot;still doesn&#x27;t work&quot;.&quot;&quot;&quot;</span></span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;&quot;&quot;Beta is Latin for &quot;still doesn&#x27;t work&quot;.&quot;&quot;&quot;</span></span></code></pre>
 <p>Within triple quotes, it is no longer necessary to escape the single quotes. However, make sure that the single quotes and the triple quotes are separated –- or else the compiler will get confused:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;&quot;&quot;Beta is Latin for &quot;still doesn&#x27;t work&quot;&quot;&quot;</span><span class=hljs-string >&quot; 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;&quot;&quot;Beta is Latin for &quot;still doesn&#x27;t work&quot;&quot;&quot;</span><span class=hljs-string >&quot; 
 </span></span>
 syntax: cannot juxtapose string literal</code></pre>
 <p>The triple quotes come with some extra special power when used with multiline text. First, if the opening &quot;&quot;&quot; is followed by a newline, this newline is stripped from the string. Also, whitespace is preserved but the string is dedented to the level of the least-indented line:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;&quot;&quot; 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;&quot;&quot; 
 </span></span>
                   Hello 
            Look 
     Here&quot;&quot;&quot;
 
-<span class=hljs-meta >julia&gt;</span><span class=julia ><span class=hljs-string > print(ans) 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia ><span class=hljs-string > print(ans) 
 </span></span>
 Hello 
 Look 
@@ -45,10 +45,10 @@ Here</code></pre>
 
 </ul>
 <p>Strings can be concatenated with an asterisk operator <code>*</code>, but this ONLY works for strings. To deal with other types, use string function:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > string(greeting, <span class=hljs-string >&quot;, &quot;</span>, username)
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > string(greeting, <span class=hljs-string >&quot;, &quot;</span>, username)
 </span>
 &quot;Good morning, 9543794&quot;
-<span class=hljs-meta >julia&gt;</span><span class=julia > string(<span class=hljs-number >2</span>, <span class=hljs-string >&quot; and &quot;</span>, <span class=hljs-number >3</span>) 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > string(<span class=hljs-number >2</span>, <span class=hljs-string >&quot; and &quot;</span>, <span class=hljs-number >3</span>) 
 </span>
 &quot;2 and 3&quot;</code></pre>
 <p>There is also a <code>String</code> method &#40;with capital S&#41;. Remember that in Julia names are case-sensitive, so string and String are two different things. For most purposes we&#39;ll need the <code>lowercase</code> function.</p>
@@ -57,19 +57,19 @@ Here</code></pre>
 
 </ul>
 <p>When creating longer, more complex strings, concatenation can be noisy and error-prone. For such cases, we&#39;re better off using the <code>&#36;</code> symbol to perform variable interpolation into strings:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > username = <span class=hljs-string >&quot;Adrian&quot;</span> 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > username = <span class=hljs-string >&quot;Adrian&quot;</span> 
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > greeting = <span class=hljs-string >&quot;Good morning&quot;</span> 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > greeting = <span class=hljs-string >&quot;Good morning&quot;</span> 
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;<span class=hljs-variable >$greeting</span>, <span class=hljs-variable >$username</span>&quot;</span> 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;<span class=hljs-variable >$greeting</span>, <span class=hljs-variable >$username</span>&quot;</span> 
 </span>
 &quot;Good morning, Adrian&quot;</code></pre>
 <p>More complex expressions can be interpolated by wrapping them into <code>&#36;&#40;...&#41;</code>:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;<span class=hljs-subst >$(uppercase(greeting)</span>), <span class=hljs-subst >$(reverse(username)</span>)&quot;</span> 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;<span class=hljs-subst >$(uppercase(greeting)</span>), <span class=hljs-subst >$(reverse(username)</span>)&quot;</span> 
 </span>
 &quot;GOOD MORNING, nairdA&quot;</code></pre>
 <p>Just like the string function, interpolation takes care of converting the values to strings:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-string >&quot;The sum of 1 and 2 is <span class=hljs-subst >$(<span class=hljs-number >1</span> + <span class=hljs-number >2</span>)</span>&quot;</span> 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-string >&quot;The sum of 1 and 2 is <span class=hljs-subst >$(<span class=hljs-number >1</span> + <span class=hljs-number >2</span>)</span>&quot;</span> 
 </span>
 &quot;The sum of 1 and 2 is 3&quot;</code></pre>
 <ul>
@@ -80,7 +80,7 @@ Here</code></pre>
 <li><p>Julia has alias. For instance, the <code>Int</code> type will reflect that, as it&#39;s just an alias to either <code>Int32</code> or <code>Int64</code>:</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@show</span> <span class=hljs-built_in >Int</span> 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@show</span> <span class=hljs-built_in >Int</span> 
 </span>
 Int = Int64</code></pre>
 <ul>
@@ -111,9 +111,9 @@ Int = Int64</code></pre>
 <li><p>In some parts of the code, you can avoid temporary memory allocation by <code>@view</code>. For example, if we want to pick a submatrix from A, we can do</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > block = A[i-<span class=hljs-number >1</span>:i+<span class=hljs-number >1</span>,j-<span class=hljs-number >1</span>:j+<span class=hljs-number >1</span>] <span class=hljs-comment ># allocate temporary var</span>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > block = A[i-<span class=hljs-number >1</span>:i+<span class=hljs-number >1</span>,j-<span class=hljs-number >1</span>:j+<span class=hljs-number >1</span>] <span class=hljs-comment ># allocate temporary var</span>
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > block = <span class=hljs-meta >@view</span> A[i-<span class=hljs-number >1</span>:i+<span class=hljs-number >1</span>,j-<span class=hljs-number >1</span>:j+<span class=hljs-number >1</span>] <span class=hljs-comment ># no allocation</span></span></code></pre>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > block = <span class=hljs-meta >@view</span> A[i-<span class=hljs-number >1</span>:i+<span class=hljs-number >1</span>,j-<span class=hljs-number >1</span>:j+<span class=hljs-number >1</span>] <span class=hljs-comment ># no allocation</span></span></code></pre>
 <ul>
 <li><p>The macro <code>@code_native</code> shows the assembly code.</p>
 
@@ -138,11 +138,11 @@ Int = Int64</code></pre>
 <li><p>Adding <code>;</code> in square bracket can change the return type to an array as you would expect. For example,</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > x = [<span class=hljs-number >1</span>:<span class=hljs-number >10</span>]
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > x = [<span class=hljs-number >1</span>:<span class=hljs-number >10</span>]
 </span>
 1-element Array{UnitRange{Int64},1}:
  1:10
-<span class=hljs-meta >julia&gt;</span><span class=julia > x = [<span class=hljs-number >1</span>:<span class=hljs-number >10</span>;]
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > x = [<span class=hljs-number >1</span>:<span class=hljs-number >10</span>;]
 </span>
 10-element Array{Int64,1}:</code></pre>
 <ul>
@@ -175,7 +175,7 @@ end</code></pre>
 <li><p>Take advantage of one-line functions for your work. For example, to search for all the files with keywords in the directory, you can do</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > searchdir(path,key) = filter(x-&gt;occursin(key,x), readdir(path))</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > searchdir(path,key) = filter(x-&gt;occursin(key,x), readdir(path))</span></code></pre>
 <ul>
 <li><p>In some cases, <code>ifelse</code> can improve performance from <code>?</code> due to the avoid of branches.</p>
 
@@ -184,7 +184,7 @@ end</code></pre>
 <li><p>There is a pipeline operator in Julia, similar to Bash:</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > trunc(-<span class=hljs-number >1.5</span>) |&gt; typeof</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > trunc(-<span class=hljs-number >1.5</span>) |&gt; typeof</span></code></pre>
 <p>In this way, we can change some operations into a more readable form.</p>
 <ul>
 <li><p>If you really care about performance, try the <code>@fastmath</code> macro.</p>
@@ -217,10 +217,14 @@ L&#x27;&#x27;\alpha&#x27;&#x27;</code></pre>
 <li><p>The <code>using</code> statement is not allowed inside functions. If you really want to do it, add a <code>@eval</code> in the front of <code>using</code>.</p>
 
 </ul>
+<ul>
+<li><p>Julia has this concept of partial application, which allows you to write functions like <code>filter&#40;&gt;&#40;0&#41;, a&#41;</code> instead of <code>filter&#40;x-&gt;x&gt;0, a&#41;</code>.</p>
+
+</ul>
 <h2 id=type_stability ><a href="#type_stability" class=header-anchor >Type Stability</a></h2>
 <p>If there is one thing that has a direct and massive impact on the performance of Julia code, it&#39;s the type system. And the most important thing about it is to write code that is <strong>type-stable</strong>. Type stability means that the type of a variable &#40;including the return value of a function&#41; must not vary with time or under different inputs. Understanding how to leverage type stability is key to writing fast software. Now that we know how to measure our code&#39;s execution time, we can see the effect of type instability with a few examples.</p>
 <p>Let&#39;s take this innocent-looking function, for example:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >function</span> f1() 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >function</span> f1() 
 </span>
            x = 0 
  
@@ -233,15 +237,15 @@ L&#x27;&#x27;\alpha&#x27;&#x27;</code></pre>
 f1 (generic function with 1 method)</code></pre>
 <p>There&#39;s nothing fancy about it. We have a variable, <code>x</code>, which is initialized to 0 –- and then a loop from 1 to 10, where we add the <code>sin</code> of a number to <code>x</code>. And then we return <code>x</code>. Nothing to see, right? Well, actually, quite the contrary –- a few bad things, performance-wise, are happening here. And they all have to do with type instability.</p>
 <p>Julia provides a great tool for inspecting and diagnosing code for type-related issues –- the <code>@code_warntype</code> macro. Here&#39;s what we get when we use it with our <code>f1</code> function:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@code_warntype</span> f1()</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@code_warntype</span> f1()</span></code></pre>
 <p>Check for the output, especially the color coding parts. As you might expect, green is good and red is bad. The problems are with <code>Body::Union&#123;Float64, Int64&#125;</code> on the first line, <code>&#40;#4 &#61;&gt; 0, #14 &#61;&gt; &#37;29&#41;::Union&#123;Float64, Int64&#125;</code> on line 12, and <code>&#40;#13 &#61;&gt; &#37;29, \#4 &#61;&gt; 0&#41;::Union&#123;Float64, Int64&#125;</code> on the penultimate line.</p>
 <p>On the first line, the <code>Body::Union&#123;Float64, Int64&#125;</code>, as well as on the penultimate line, <code>::Union&#123;Float64, Int64&#125;</code>, tell us the same thing –- the function returns a <code>Union&#123;Float64, Int64&#125;</code>, meaning that the function can return either a Float or an Integer. This is textbook type instability and bad news for performance. Next, on line 12, something has a type of <code>Union&#123;Float64, Int64&#125;</code> and this value is then returned as the result of the function. In case you&#39;re wondering, that something is <code>x</code>.</p>
 <p>The problem is that we unsuspectingly initialized <code>x</code> to 0, an Integer. However, the <code>sin</code> function will return a Float. Adding a Float to an Integer will result in a Float, causing the type of <code>x</code> to change accordingly. Thus, <code>x</code> has two types during the execution of the function, and since we return <code>x</code>, our function is also type-unstable.</p>
 <p>Granted, understanding the output of <code>@code_warntype</code> is not easy, although it does get easier with time. However, we can make our job easier by using the super-useful <a href="https://github.com/JunoLab/Traceur.jl">Traceur.jl</a> package. It provides a <code>@trace</code> macro, which generates human-friendly information. Let&#39;s add it and try it out; you&#39;ll appreciate it:</p>
 <pre><code class="julia-repl hljs"><span class=hljs-metap>(IssueReporter) pkg&gt;</span> add Traceur 
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >using</span> Traceur 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >using</span> Traceur 
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@trace</span> f1() 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@trace</span> f1() 
 </span>
 ┌ Warning: x is assigned as Int64 
 └ @ REPL[94]:2 
@@ -252,7 +256,7 @@ f1 (generic function with 1 method)</code></pre>
 1.4111883712180104</code></pre>
 <p>How cool is that? Crystal clear&#33; </p>
 <p>With this feedback in mind, we can refactor our code into a new <code>f2</code> function:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >function</span> f2() 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >function</span> f2() 
 </span>
            x = 0.0 
  
@@ -264,17 +268,17 @@ f1 (generic function with 1 method)</code></pre>
        end 
 f2 (generic function with 1 method) 
  
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@trace</span> f2() 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@trace</span> f2() 
 </span>
 1.4111883712180104</code></pre>
 <p>Awesome, nothing to report&#33; No news is good news&#33;</p>
 <p>Now, we can benchmark <code>f1</code> and <code>f2</code> to see the result of our refactoring:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@btime</span> f1() 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@btime</span> f1() 
 </span>
   129.413 ns (0 allocations: 0 bytes) 
 1.4111883712180104 
  
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@btime</span> f2() 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@btime</span> f2() 
 </span>
   79.241 ns (0 allocations: 0 bytes) 
 1.4111883712180104</code></pre>
@@ -286,30 +290,30 @@ f2 (generic function with 1 method)
 <p>Remember tha mutable objects like arrays are allocated on the heap, while immutable objects like tuple and static arrays are allocated on the stack. This will cause performance differences especially inside loop kernels&#33;</p>
 <h2 id=benchmarking_tools ><a href="#benchmarking_tools" class=header-anchor >Benchmarking tools</a></h2>
 <p>Given its focus on performance, it should come as no surprise that both core Julia and the ecosystem provide a variety of tools for inspecting our code, looking for bottlenecks and measuring runtime and memory usage. One of the simplest is the <code>@time</code> macro. It takes an expression and then prints its execution time, number of allocations, and the total number of bytes the execution caused to be allocated, before returning the result of the expression. For example, note the following:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@time</span> [x <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >1_000_000</span>]; 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@time</span> [x <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >1_000_000</span>]; 
 </span>
   0.031727 seconds (55.85 k allocations: 10.387 MiB)</code></pre>
 <p>Generating an array of one million integers by iterating from one to one million takes 0.03 seconds. Not bad, but what if I told you that we can do better –- much better? We just committed one of the cardinal sins of Julia—code should not be run &#40;nor benchmarked&#41; in the global scope. So, rule one –- always wrap your code into functions.</p>
 <p>The previous snippet can easily be refactored as follows:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >function</span> onetomil()  
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >function</span> onetomil()  
 </span>
             [x for x in 1:1_000_000]
        end 
 onetomil (generic function with 1 method)</code></pre>
 <p>Now, the benchmark is as follows:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@time</span> onetomil();
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@time</span> onetomil();
 </span>
   0.027002 seconds (65.04 k allocations: 10.914 MiB)</code></pre>
 <p>All right, that&#39;s clearly faster –- but not much faster. However, what if we run the benchmark one more time?</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@time</span> onetomil();
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@time</span> onetomil();
 </span>
   0.002413 seconds (6 allocations: 7.630 MiB)</code></pre>
 <p>Wow, that&#39;s an order of magnitude faster&#33; So, what gives?</p>
 <p>Julia uses a just-in-time &#40;JIT&#41; compiler; that is, a function is compiled in real time when it is invoked for the first time. So, our initial benchmark also included the compilation time. This brings us to the second rule –- don&#39;t benchmark the first run.</p>
 <p>The best way to accurately measure the performance of a piece of code, thus, would be to execute it multiple times and then compute the mean. There is a great tool, specially designed for this use case, called <code>BenchmarkTools</code>. Let&#39;s add it and give it a try:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >using</span> BenchmarkTools 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >using</span> BenchmarkTools 
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@benchmark</span> onetomil() 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@benchmark</span> onetomil() 
 </span>
 BenchmarkTools.Trial: 
   memory estimate:  7.63 MiB 
@@ -323,7 +327,7 @@ BenchmarkTools.Trial:
   samples:          1788 
   evals/sample:     1</code></pre>
 <p>We can also use the more compact <code>@btime</code> macro, which has an output similar to <code>@time</code>, but executes an equally comprehensive benchmark:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-meta >@btime</span> onetomil(); 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-meta >@btime</span> onetomil(); 
 </span>
   1.363 ms (2 allocations: 7.63 MiB</code></pre>
 <p><a href="https://github.com/JuliaCI/BenchmarkTools.jl/blob/master/doc/manual.md">BenchmarkTools</a> exposes a very rich API and it&#39;s worth getting to know it well.</p>
@@ -346,44 +350,44 @@ b = a
 b = <span class=hljs-number >2</span></code></pre>
 <p>then <code>a</code> will not change.</p>
 <p>One common misunderstanding from C users is pass-by-reference/value. Julia behaves the same as in Python. For example,</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = <span class=hljs-number >1</span>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = <span class=hljs-number >1</span>
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > b = a
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > b = a
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > b = <span class=hljs-number >2</span>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > b = <span class=hljs-number >2</span>
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > a</span></code></pre>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > a</span></code></pre>
 <p>what do you expect for the value of a? Because a is immutable, it will not change from 1 to 2&#33; However, the following</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = [<span class=hljs-number >1</span>,<span class=hljs-number >2</span>]
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = [<span class=hljs-number >1</span>,<span class=hljs-number >2</span>]
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > b = a
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > b = a
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > b[<span class=hljs-number >1</span>] = <span class=hljs-number >2</span>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > b[<span class=hljs-number >1</span>] = <span class=hljs-number >2</span>
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > a</span></code></pre>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > a</span></code></pre>
 <p>is different, because array is mutable object. Therefore the value of a should be <code>&#91;2,2&#93;</code>.</p>
 <ul>
 <li><p>Arrays and vectors are tricky. Be careful about singleton dimensions&#33;</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = [<span class=hljs-string >&quot;1&quot;</span>,<span class=hljs-string >&quot;2&quot;</span>]
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = [<span class=hljs-string >&quot;1&quot;</span>,<span class=hljs-string >&quot;2&quot;</span>]
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > a = [<span class=hljs-string >&quot;1&quot;</span> <span class=hljs-string >&quot;2&quot;</span>]
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > a = [<span class=hljs-string >&quot;1&quot;</span> <span class=hljs-string >&quot;2&quot;</span>]
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > a = [<span class=hljs-string >&quot;1&quot;</span>;<span class=hljs-string >&quot;2&quot;</span>]
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > a = [<span class=hljs-string >&quot;1&quot;</span>;<span class=hljs-string >&quot;2&quot;</span>]
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > reshape(a,:,<span class=hljs-number >1</span>)
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > reshape(a,:,<span class=hljs-number >1</span>)
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > reshape(a,<span class=hljs-number >1</span>,:)</span></code></pre>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > reshape(a,<span class=hljs-number >1</span>,:)</span></code></pre>
 <ul>
 <li><p><code>reshape</code> function does not allocate new memory&#33; The indexes can only be Int64 on a 64bit machine and Int32 on a 32bit machine. See the <a href="https://github.com/JuliaLang/julia/issues/311">reason</a> behind this decision by Stefan and Jeff.</p>
 
 <li><p>Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like </p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = <span class=hljs-string >&quot;hello&quot;</span>; a[<span class=hljs-number >2</span>] = <span class=hljs-string >&quot;a&quot;</span></span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = <span class=hljs-string >&quot;hello&quot;</span>; a[<span class=hljs-number >2</span>] = <span class=hljs-string >&quot;a&quot;</span></span></code></pre>
 <p>On the other hand, arrays are mutable, which makes it important to distinguish between aliasing and copying. For example,</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = [<span class=hljs-number >1</span>,<span class=hljs-number >2</span>,<span class=hljs-number >3</span>]; b = a; b[<span class=hljs-number >1</span>] = <span class=hljs-number >42</span>; println(a)</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = [<span class=hljs-number >1</span>,<span class=hljs-number >2</span>,<span class=hljs-number >3</span>]; b = a; b[<span class=hljs-number >1</span>] = <span class=hljs-number >42</span>; println(a)</span></code></pre>
 <p>will also change the values of <code>a</code>. The slicing operation <code>&#91;:&#93;</code> means copying, and the heavy memory usage compared to in-place manipulations is probably one of the reasons Julia encourages de-vectorized code. However, I am not entirely sure about what will be happening if the dot syntax is used together with slicing. As a side note, MATLAB uses &quot;lazy copy&quot; strategy.</p>
 <ul>
 <li><p>If I define a macro and execute the script again after the first one, it always says <code>invalid redefinition of constant ...</code>.</p>
@@ -410,18 +414,18 @@ b = <span class=hljs-number >2</span></code></pre>
 <li><p>In Julia, string literals are encoded using UTF-8. UTF-8 is a variable-width encoding, meaning that not all characters are represented using the same number of bytes. For example, ASCII characters are encoded using a single byte–- but other characters can use up to four bytes. This means that not every byte index into a UTF-8 string is necessarily a valid index for a corresponding character. If you index into a string at such an invalid byte index, an error will be thrown. Here is what I mean:</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > str = <span class=hljs-string >&quot;Søren Kierkegaard was a Danish Philosopher&quot;</span> 
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > str = <span class=hljs-string >&quot;Søren Kierkegaard was a Danish Philosopher&quot;</span> 
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > str[<span class=hljs-number >1</span>] 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > str[<span class=hljs-number >1</span>] 
 </span>
 &#x27;S&#x27;: ASCII/Unicode U+0053 (category Lu: Letter, uppercase)
-<span class=hljs-meta >julia&gt;</span><span class=julia > str[<span class=hljs-number >2</span>] 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > str[<span class=hljs-number >2</span>] 
 </span>
 &#x27;ø&#x27;: Unicode U+00f8 (category Ll: Letter, lowercase) 
-<span class=hljs-meta >julia&gt;</span><span class=julia > str[<span class=hljs-number >3</span>] 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > str[<span class=hljs-number >3</span>] 
 </span>
 StringIndexError(&quot;Søren Kierkegaard was a Danish Philosopher&quot;, 3)
-<span class=hljs-meta >julia&gt;</span><span class=julia > str[<span class=hljs-number >4</span>] 
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > str[<span class=hljs-number >4</span>] 
 </span>
 &#x27;r&#x27;: ASCII/Unicode U+0072 (category Ll: Letter, lowercase)</code></pre>
 <ul>
@@ -472,19 +476,19 @@ end</code></pre>
 <li><p>Once I wanted to create an array of arrays and append items to each later on. This was what I did:</p>
 
 </ul>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = <span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Int</span>}}(<span class=hljs-literal >undef</span>,<span class=hljs-number >2</span>)
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = <span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Int</span>}}(<span class=hljs-literal >undef</span>,<span class=hljs-number >2</span>)
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > push!(a[<span class=hljs-number >1</span>],<span class=hljs-number >1</span>)
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > push!(a[<span class=hljs-number >1</span>],<span class=hljs-number >1</span>)
 </span>
 ERROR: UndefRefError: access to undefined reference</code></pre>
 <p>An even more strange thing happened for <code>fill</code>:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a = fill(<span class=hljs-built_in >Int</span>[],<span class=hljs-number >2</span>)
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = fill(<span class=hljs-built_in >Int</span>[],<span class=hljs-number >2</span>)
 </span>
-<span class=hljs-meta >julia&gt;</span><span class=julia > push!(a[<span class=hljs-number >1</span>],<span class=hljs-number >1</span>)</span></code></pre>
+<span class=hljs-meta >julia&gt;</span><span class=language-julia > push!(a[<span class=hljs-number >1</span>],<span class=hljs-number >1</span>)</span></code></pre>
 <p>Guess what I got? All the arrays are identical, which means that they are actually referred to the same memory allocation&#33; This can only be avoided if I set each to a different value:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > a[<span class=hljs-number >1</span>] = [<span class=hljs-number >1</span>]</span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a[<span class=hljs-number >1</span>] = [<span class=hljs-number >1</span>]</span></code></pre>
 <p>Then <code>a&#91;1&#93;</code> is detached, but <code>a&#91;2&#93;</code> and <code>a&#91;3&#93;</code> are still pointing to the same memory allocation&#33; What I ended up doing is:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-keyword >for</span> i=<span class=hljs-number >1</span>:length(a) a[i] = [] <span class=hljs-keyword >end</span></span></code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >for</span> i=<span class=hljs-number >1</span>:length(a) a[i] = [] <span class=hljs-keyword >end</span></span></code></pre>
 <p>This behavior is so weird&#33; Be careful about all the related functions like <code>zeros,ones</code>.</p>
 <ul>
 <li><p>for loops not inside functions &#40;e.g. in REPL&#41; does not inherit the variables from global scope.</p>
@@ -574,9 +578,13 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
    <span class=hljs-keyword >end</span>
 <span class=hljs-keyword >end</span></code></pre>
 <p>Remember that the imported functions must be defined before the submodules, otherwise Julia will warn you with &quot;not found&quot;.</p>
+<ul>
+<li><p>In Julia, generally there is no issue of memory fragmentation for array of structs, just as in C. On the contrary, for Java each class contains header.</p>
+
+</ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: May 24, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: June 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
