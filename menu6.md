@@ -220,6 +220,8 @@ L''\alpha''
 
 * The `using` statement is not allowed inside functions. If you really want to do it, add a `@eval` in the front of `using`.
 
+* Julia has this concept of partial application, which allows you to write functions like `filter(>(0), a)` instead of `filter(x->x>0, a)`.
+
 ## Type Stability
 
 If there is one thing that has a direct and massive impact on the performance of Julia code, it's the type system. And the most important thing about it is to write code that is **type-stable**. Type stability means that the type of a variable (including the return value of a function) must not vary with time or under different inputs. Understanding how to leverage type stability is key to writing fast software. Now that we know how to measure our code's execution time, we can see the effect of type instability with a few examples.
@@ -611,3 +613,5 @@ module SuperModule
 end
 ```
 Remember that the imported functions must be defined before the submodules, otherwise Julia will warn you with "not found".
+
+* In Julia, generally there is no issue of memory fragmentation for array of structs, just as in C. On the contrary, for Java each class contains header.
