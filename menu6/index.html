@@ -115,6 +115,10 @@ Int = Int64</code></pre>
 </span>
 <span class=hljs-meta >julia&gt;</span><span class=language-julia > block = <span class=hljs-meta >@view</span> A[i-<span class=hljs-number >1</span>:i+<span class=hljs-number >1</span>,j-<span class=hljs-number >1</span>:j+<span class=hljs-number >1</span>] <span class=hljs-comment ># no allocation</span></span></code></pre>
 <ul>
+<li><p>In operations like setting array slice values, e.g. <code>a&#91;1:3,1&#93; &#61; &#91;1,2,3&#93;</code>, the right hand side creates a temporary vector. One way to avoid it is by setting each element separately. I don&#39;t know if there are better ways.</p>
+
+</ul>
+<ul>
 <li><p>The macro <code>@code_native</code> shows the assembly code.</p>
 
 </ul>
@@ -584,7 +588,7 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 </ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: June 06, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: June 26, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
