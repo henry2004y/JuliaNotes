@@ -144,6 +144,8 @@ julia> block = A[i-1:i+1,j-1:j+1] # allocate temporary var
 julia> block = @view A[i-1:i+1,j-1:j+1] # no allocation
 ```
 
+* In operations like setting array slice values, e.g. `a[1:3,1] = [1,2,3]`, the right hand side creates a temporary vector. One way to avoid it is by setting each element separately. I don't know if there are better ways.
+
 * The macro `@code_native` shows the assembly code.
 
 * Do-Block: the `do x` syntax creates an anonymous function with argument `x` and passes it as the first argument to the preceding function. The implementation of do-block syntax is mind-refreshing and elegant.
