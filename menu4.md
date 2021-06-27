@@ -148,6 +148,8 @@ Julia can be run in a multithreaded mode. This has gone through many improvement
 
 As you have seen, in order to start Julia with multiple threads, you have to set the environment variable `JULIA_NUM_THREADS`. It is used by Julia to determine how many threads it should use. This value --- in order to have any effect --- must be set before Julia is started. This means that you can access it via the `ENV["JULIA_NUM_THREADS"]` option but changing it when Julia is running will not add or remove threads.
 
+Many packages provides native threading support under the hood, for example, [Tullio.jl](https://github.com/mcabbott/Tullio.jl). However, the built-in threading control is currently limited, especially for nested loops. I wish the native Julia threading can be as good as OpenMP one day.
+
 ## Distributed computing
 
 Julia provides built-in language functionality to run a program across many processes that can run locally, across a distributed network, or in a computational cluster.
