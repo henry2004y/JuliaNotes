@@ -14,7 +14,11 @@ Mechanisms for distributed computing are built into the Julia language. But to f
 ## Coroutines
 
 
+## SIMD
 
+In Julia now we have several options of utilizing the SIMD instructions in LLVM:
+* [LoopVectorization.jl](https://github.com/JuliaSIMD/LoopVectorization.jl): focus on kernel loops, one macro for all;
+* [SIMD.jl](https://github.com/eschnett/SIMD.jl): explicit vectorization calls. Everything at programmers' hand, but may not be optimal. The concept is similar to, e.g., Agner's vectorization library in C++.
 
 ## Multiple processes
 
