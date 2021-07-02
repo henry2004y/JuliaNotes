@@ -587,7 +587,7 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 
 </ul>
 <ul>
-<li><p>Low level optimization: <a href="https://github.com/SciML/MuladdMacro.jl">MuladdMacro</a>. LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions.</p>
+<li><p>Low level optimization: <a href="https://github.com/SciML/MuladdMacro.jl">MuladdMacro</a>. LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions. In this particular case, first check if <a href="https://docs.julialang.org/en/v1/base/math/#Base.muladd">muladd</a> in the base library can help&#33;</p>
 
 </ul>
 <div class=page-foot >
