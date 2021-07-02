@@ -167,7 +167,7 @@ julia> x = [1:10;]
 
 * `$` can be used to protect the functions that we do not want to broadcast, when used together with `@`.
 
-* Often, especially in performance-critical code, we want to squeeze the maximum speed out of Julia. If you are working with arrays, the `@inbounds` macro can be used to significantly reduce access time to the elements. The drawback is that you have to be sure that you are not trying to access an out-of-bounds location. The index boundary check can be turned off also by adding the `--check-bounds=no` flag to Julia.
+* Often, especially in performance-critical code, we want to squeeze the maximum speed out of Julia. If you are working with arrays, the `@inbounds` macro can be used to significantly reduce access time to the elements. The drawback is that you have to be sure that you are not trying to access an out-of-bounds location. The index boundary check can be turned off also by adding the `--check-bounds=no` flag to Julia. Also note the [scope of `@inbounds`](https://stackoverflow.com/questions/38901275/inbounds-propagation-rules-in-julia). In short, this macro effects all the index checking inside for loops, but not functions that are not inlined. The propagation of turning off inbound checking requires extra commands.
 
 If you are developing a function in which you want to allow its user to disable bounds checking, you can use the `@boundscheck` macro. Here is an example function definition from `base/bitarray.jl`:
 
