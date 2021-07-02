@@ -154,7 +154,7 @@ Int = Int64</code></pre>
 
 </ul>
 <ul>
-<li><p>Often, especially in performance-critical code, we want to squeeze the maximum speed out of Julia. If you are working with arrays, the <code>@inbounds</code> macro can be used to significantly reduce access time to the elements. The drawback is that you have to be sure that you are not trying to access an out-of-bounds location. The index boundary check can be turned off also by adding the <code>--check-bounds&#61;no</code> flag to Julia.</p>
+<li><p>Often, especially in performance-critical code, we want to squeeze the maximum speed out of Julia. If you are working with arrays, the <code>@inbounds</code> macro can be used to significantly reduce access time to the elements. The drawback is that you have to be sure that you are not trying to access an out-of-bounds location. The index boundary check can be turned off also by adding the <code>--check-bounds&#61;no</code> flag to Julia. Also note the <a href="https://stackoverflow.com/questions/38901275/inbounds-propagation-rules-in-julia">scope of <code>@inbounds</code></a>. In short, this macro effects all the index checking inside for loops, but not functions that are not inlined. The propagation of turning off inbound checking requires extra commands.</p>
 
 </ul>
 <p>If you are developing a function in which you want to allow its user to disable bounds checking, you can use the <code>@boundscheck</code> macro. Here is an example function definition from <code>base/bitarray.jl</code>:</p>
@@ -588,7 +588,7 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 </ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: June 28, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: July 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
