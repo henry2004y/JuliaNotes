@@ -586,6 +586,10 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 <li><p>In Julia, generally there is no issue of memory fragmentation for array of structs, just as in C. On the contrary, for Java each class contains header.</p>
 
 </ul>
+<ul>
+<li><p>Low level optimization: <a href="https://github.com/SciML/MuladdMacro.jl">MuladdMacro</a>. LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions.</p>
+
+</ul>
 <div class=page-foot >
   <div class=copyright >
     &copy; Hongyang Zhou. Last modified: July 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
