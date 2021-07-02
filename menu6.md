@@ -618,4 +618,4 @@ Remember that the imported functions must be defined before the submodules, othe
 
 * In Julia, generally there is no issue of memory fragmentation for array of structs, just as in C. On the contrary, for Java each class contains header.
 
-* Low level optimization: [MuladdMacro](https://github.com/SciML/MuladdMacro.jl). LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions.
+* Low level optimization: [MuladdMacro](https://github.com/SciML/MuladdMacro.jl). LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions. In this particular case, first check if [muladd](https://docs.julialang.org/en/v1/base/math/#Base.muladd) in the base library can help!
