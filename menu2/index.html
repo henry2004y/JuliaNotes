@@ -66,7 +66,7 @@ arr  <span class=hljs-comment ># [1,2]</span></code></pre>
 343
 512
 729
-  0.035376 seconds (43.45 k allocations: 9.887 MiB)
+  0.037193 seconds (43.45 k allocations: 9.888 MiB)
 </code></pre>
 <p>This computation uses significant resources, over 10 MB of memory and almost 60,000 allocations, because the comprehension creates the full array of one million items, despite the fact that we only iterate over its first nine elements.</p>
 <p>Compare this with using a generator:</p>
@@ -83,7 +83,7 @@ arr  <span class=hljs-comment ># [1,2]</span></code></pre>
 343
 512
 729
-  0.014904 seconds (13.49 k allocations: 781.308 KiB)
+  0.015770 seconds (13.48 k allocations: 779.183 KiB)
 </code></pre>
 <p>Less than 1 MB and a quarter of the number of allocations. The difference will be even more dramatic if we increase the number of elements in the array.</p>
 <h3 id=dictionaries ><a href="#dictionaries" class=header-anchor >Dictionaries</a></h3>
@@ -199,7 +199,7 @@ m = match(<span class=hljs-string >r&quot;(\w+)+&quot;</span>, alice_in_wonderla
 </span><span class=hljs-metap>(Sandbox) pkg&gt;</span> resolve</code></pre>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: July 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: July 15, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>

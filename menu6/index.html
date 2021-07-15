@@ -590,9 +590,13 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 <li><p>Low level optimization: <a href="https://github.com/SciML/MuladdMacro.jl">MuladdMacro</a>. LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions. In this particular case, first check if <a href="https://docs.julialang.org/en/v1/base/math/#Base.muladd">muladd</a> in the base library can help&#33;</p>
 
 </ul>
+<ul>
+<li><p>One general technique in computer science is called lazy evaluations. This essentially means that computations of actual data are postponed until they are needed. It may be useful in the case where more information is gathered at a later stage such that we are able to perform better optimizations. Example packages are <a href="https://github.com/JuliaArrays/LazyArrays.jl">LazyArrays</a> and <a href="https://github.com/JuliaArrays/LazyGrids.jl">LazyGrids</a>.</p>
+
+</ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: July 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: July 15, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
