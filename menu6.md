@@ -619,3 +619,5 @@ Remember that the imported functions must be defined before the submodules, othe
 * In Julia, generally there is no issue of memory fragmentation for array of structs, just as in C. On the contrary, for Java each class contains header.
 
 * Low level optimization: [MuladdMacro](https://github.com/SciML/MuladdMacro.jl). LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions. In this particular case, first check if [muladd](https://docs.julialang.org/en/v1/base/math/#Base.muladd) in the base library can help!
+
+* One general technique in computer science is called lazy evaluations. This essentially means that computations of actual data are postponed until they are needed. It may be useful in the case where more information is gathered at a later stage such that we are able to perform better optimizations. Example packages are [LazyArrays](https://github.com/JuliaArrays/LazyArrays.jl) and [LazyGrids](https://github.com/JuliaArrays/LazyGrids.jl).
