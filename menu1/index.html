@@ -150,6 +150,7 @@ x &gt; <span class=hljs-number >5</span> &amp;&amp; <span class=hljs-string >&qu
 <h2 id=gpu ><a href="#gpu" class=header-anchor >GPU</a></h2>
 <p>The capability of generating assembly code from Julia makes it possible to take advantage of the CUDA C API and pass instructions to the backend GPU compiler. Writing CUDA code in Julia is by far the easiest way to do it besides C/C&#43;&#43; and Fortran: I have created a <a href="https://github.com/henry2004y/GPU-Collection/tree/master/julia">repository</a> for the small examples.</p>
 <p>Check out this <a href="https://notamonadtutorial.com/julia-gpu-98a461d33e21">interview of Time Besard</a> for the logics and progress of GPU programming in Julia.</p>
+<p>CUDA.jl is bundled with an advising tool for the optimal blocks and threads for your kernel on this specific hardware. Besides, the profiler and tracer from Nvidia is fully compatible with CUDA.jl.</p>
 <h2 id=live_evaluation_of_code_blocks ><a href="#live_evaluation_of_code_blocks" class=header-anchor >Live evaluation of code blocks</a></h2>
 <p>If you would like to show code as well as what the code outputs, you only need to specify where the script corresponding to the code block will be saved.</p>
 <p>Indeed, what happens is that the code block gets saved as a script which then gets executed. This also allows for that block to not be re-executed every time you change something <em>else</em> on the page.</p>
@@ -164,7 +165,7 @@ println(dot(a, a))</code></pre>
 </code></pre>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: July 15, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: July 20, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
