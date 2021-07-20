@@ -200,6 +200,8 @@ The capability of generating assembly code from Julia makes it possible to take 
 
 Check out this [interview of Time Besard](https://notamonadtutorial.com/julia-gpu-98a461d33e21) for the logics and progress of GPU programming in Julia.
 
+CUDA.jl is bundled with an advising tool for the optimal blocks and threads for your kernel on this specific hardware. Besides, the profiler and tracer from Nvidia is fully compatible with CUDA.jl.
+
 ## Live evaluation of code blocks
 
 If you would like to show code as well as what the code outputs, you only need to specify where the script corresponding to the code block will be saved.
