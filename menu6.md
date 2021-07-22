@@ -307,6 +307,9 @@ julia> @btime f2()
 1.4111883712180104
 ```
 
+One specific part that I have made many mistakes is the construction of type-stable struct. Check the official performance tips about how to write type-stable struct constructors!
+
+
 ## Avoid Memory Allocation
 
 ### Using array views to avoid memory allocation
