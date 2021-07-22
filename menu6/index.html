@@ -286,6 +286,7 @@ f2 (generic function with 1 method)
 </span>
   79.241 ns (0 allocations: 0 bytes) 
 1.4111883712180104</code></pre>
+<p>One specific part that I have made many mistakes is the construction of type-stable struct. Check the official performance tips about how to write type-stable struct constructors&#33;</p>
 <h2 id=avoid_memory_allocation ><a href="#avoid_memory_allocation" class=header-anchor >Avoid Memory Allocation</a></h2>
 <h3 id=using_array_views_to_avoid_memory_allocation ><a href="#using_array_views_to_avoid_memory_allocation" class=header-anchor >Using array views to avoid memory allocation</a></h3>
 <h3 id=static_arrays ><a href="#static_arrays" class=header-anchor >Static arrays</a></h3>
@@ -596,7 +597,7 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 </ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: July 20, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: July 22, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
