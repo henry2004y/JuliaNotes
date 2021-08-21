@@ -66,7 +66,7 @@ end</code></pre>
 343
 512
 729
-  0.046491 seconds (43.45 k allocations: 9.888 MiB)
+  0.045746 seconds (43.45 k allocations: 9.888 MiB)
 </code></pre>
 <p>This computation uses significant resources, over 10 MB of memory and almost 60,000 allocations, because the comprehension creates the full array of one million items, despite the fact that we only iterate over its first nine elements.</p>
 <p>Compare this with using a generator:</p>
@@ -83,7 +83,7 @@ end</code></pre>
 343
 512
 729
-  0.020424 seconds (13.48 k allocations: 779.183 KiB)
+  0.019237 seconds (13.48 k allocations: 779.183 KiB)
 </code></pre>
 <p>Less than 1 MB and a quarter of the number of allocations. The difference will be even more dramatic if we increase the number of elements in the array.</p>
 <h3 id=dictionaries ><a href="#dictionaries" class=header-anchor >Dictionaries</a></h3>
