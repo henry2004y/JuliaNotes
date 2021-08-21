@@ -201,4 +201,4 @@ s = Vector2{4,Int64}([1,2,3,4])
 @btime avg2($s.vals)
 ```
 
-In the above example, the generated function can be 3x faster, and even more with increased size of `s`. However, I don't quite understand why the `@time` macro shows different trend compared with `@btime`?
+In the above example, the generated function can be 3x faster (which is affected by the size of the vector). As a side effect, the compiling time significantly increases. At about `length(s)=20`, the two give equal timings. However, I don't quite understand why the `@time` macro shows different trend compared with `@btime`?
