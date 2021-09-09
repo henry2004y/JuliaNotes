@@ -167,3 +167,38 @@ Besides they're very powerful, macros are also very convenient. They can provide
 However, **most of the time, don't do metaprogramming**! The primary purpose of macros is not performance: it is to allow syntax transformations. Don't try to think that you can easily beat a modern compiler! More in depth explanations can be found in [this post](https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html) and [Steve Johnson's talk at JuliaCon2019](https://www.youtube.com/watch?v=mSgXWpvQEHE).
 
 Macros --- and metaprogramming in general --- are powerful concepts that require whole books to discuss at length. For more, going over the [official documentation](https://docs.julialang.org/en/stable/manual/metaprogramming/).
+
+## Loop Unrolling
+
+Surprisingly at first, metaprogramming can help unrolling loops with `@generated` when the size of the loop is known at compile time.
+
+```julia
+using BenchmarkTools
+
+struct Vector2{N,T}
+   vals::Vector{T}
+end
+
+function avg2(vals::Vector) 
+   sum = vals[1]
+   for i in 2:length(vals)
+      sum += vals[i]
+   end
+   sum / length(vals) 
+end
+
+
+@generated function avgg(els::Vector2{N,T}) where {N,T}
+   code = :(els.vals[1])
+   for i=2:N
+      code = :($code + els.vals[$i])
+   end
+   :(($code)/$N)
+end
+
+s = Vector2{4,Int64}([1,2,3,4])
+@btime avgg($s)
+@btime avg2($s.vals)
+```
+
+In the above example, the generated function can be 3x faster (which is affected by the size of the vector). As a side effect, the compiling time significantly increases. At about `length(s)=20`, the two give equal timings. However, I don't quite understand why the `@time` macro shows different trend compared with `@btime`?
