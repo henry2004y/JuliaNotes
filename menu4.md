@@ -143,6 +143,12 @@ UndefVarError: #hello not defined
 
 The solution is, again, `@everywhere`.
 
+Typically we want the number of workers to match the number of physical cores (`nproc` in Bash). The master process should not participate in computing.
+
+There is a macro named `@distributed` which is very tempting to use for loop reductions, but use it with care. Nothing is shared from one iteration to another, and currently there is no way to control this behavior.
+
+For more in-depth usage, checkout e.g. `pmap` which applys a function to each element of a collection using available workers.
+
 ## Multiple threads
 
 Julia can be run in a multithreaded mode. This has gone through many improvements in recent versions, and may be subject to change in the future. This mode is achieved via the `JULIA_NUM_THREADS` system environment variable, or the `-t` option when opening Julia. One should perform the following steps:
@@ -153,6 +159,8 @@ Julia can be run in a multithreaded mode. This has gone through many improvement
 As you have seen, in order to start Julia with multiple threads, you have to set the environment variable `JULIA_NUM_THREADS`. It is used by Julia to determine how many threads it should use. This value --- in order to have any effect --- must be set before Julia is started. This means that you can access it via the `ENV["JULIA_NUM_THREADS"]` option but changing it when Julia is running will not add or remove threads.
 
 Many packages provides native threading support under the hood, for example, [Tullio.jl](https://github.com/mcabbott/Tullio.jl). However, the built-in threading control is currently limited, especially for nested loops. I wish the native Julia threading can be as good as OpenMP one day.
+
+There is also a new threading library [Polyester.jl](https://github.com/JuliaSIMD/Polyester.jl) which is more restrictive but offers less overhead.
 
 ## Distributed computing
 
