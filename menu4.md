@@ -176,7 +176,7 @@ In order to build a distributed cluster, we need to configure passwordless SSH. 
 
 We assume that Linux Ubuntu 18.04.1 LTS is used and the username for the computations is ubuntu. We start by creating the key. You will find the command and a sample output, as follows:
 
-```
+```sh
 ssh-keygen -P "" -t rsa -f ~/.ssh/cluster
 ```
 
@@ -193,8 +193,8 @@ Now, we need to add the contents of the public key to the `~/.ssh/authorized_key
 
 Now, we can test our configuration on a local machine:
 
-```
-$ ssh ubuntu@localhost
+```sh
+ssh ubuntu@localhost
 ```
 
 Distributed multiprocessing in Julia is achieved using the `--machine-file` launch option of the julia command. The functionality is similar to the `-p` option but much more powerful since you can distribute Julia over any cluster size. Sample `machinefile.txt` content is presented in the following code snippet. The first number in each line provides the number of worker processes that should be started on the remote host. It is followed by an asterisk `*` character and the username on the remote host. In a production environment, you would provide IP addresses of the remote host rather than 127.0.0.1:
@@ -208,9 +208,8 @@ Distributed multiprocessing in Julia is achieved using the `--machine-file` laun
 The preceding options will allow you to use Julia's distributed cluster mechanism on just a single local machine. We recommend that you also try adding the IP addresses of the remote machines to the preceding file.
 
 Once you have the `machinefile.txt` file ready, you can tell Julia to load it by running the following command:
-
-```
-$ julia --machine-file machinefile.txt
+```sh
+julia --machine-file machinefile.txt
 ```
 
 This will launch the Julia master process and a number of Julia slave processes, according to the definitions given in the `machinefile.txt` file.
@@ -228,6 +227,6 @@ There are supports to the SPMD through the package DistributedArray. However, cu
 
 1. I am still not sure about using MPI in Julia: since I can only do this in command line, does it mean that every time the code needs to be recompiled?
 
-The answer is yes. This question reflects my misunderstanding of the underlying workflow. Every Julia function and type is compiled the first time it is executed. This has nothing to do with MPI, which is a standard for inter-process communication. MPI is implemented in C, so the MPI.jl package is basically calling the C library for sending/receiving data from other processors.
+The answer is yes. This question reflects my misunderstanding of the underlying workflow: every Julia function and type is compiled the first time it is executed. This has nothing to do with MPI, which is a standard for inter-process communication. MPI is implemented in C, so the MPI.jl package is basically calling the C library for sending/receiving data from other processors.
 
 Checkout more about CPU parallel computing in Julia in [ParallelJulia](https://github.com/henry2004y/ParallelJulia). 
