@@ -25,13 +25,13 @@ The Julia compiler workflow is presented in [Jameson Nash's talk](https://www.yo
   * static system image (.so/.dll/.dylib)
   * machine code representation
 
-Actually one can go deeper into the processor and find that it handles the machine code in a way similar to Julia's workflow, with multiple levels of caching and optimization.
+If one dive deeper into the processor, he/she will find that it handles the machine code in a way similar to Julia's workflow, with multiple levels of caching and optimization.
 
-So what's unique about Julia in the sense of a new programming language? It all lies in the **code_typed** process which is closely related to **Interprocedural Optimization (IPO)**. Julia has implemented a dataflow inference algorithm that runs Ahead of Time (AOT), in the computer science language, which is different from the common Just-In-Time (JIT) compilation that people talk about. This is also the reason why Julia takes a significant amount of time the first time it executes the code: for the later runs, the compiler caches previous machine codes and will only rerun the compilation process for the modified codes.
+So what's unique about Julia in the sense of a new programming language? It all lies in the **code_typed** process which is closely related to **Interprocedural Optimization (IPO)**. Julia has implemented a dataflow inference algorithm that runs Ahead of Time (AOT), which is different from the common Just-In-Time (JIT) compilation that people talk about. This is also the reason why Julia takes a significant amount of time the first time it executes the code: for later runs, the compiler caches previous machine codes and will only rerun the compilation process for the modified codes.
 
 ## Big pictures to keep in mind
 
-In a compiled language like Julia, loops are most-of-the-time better than vectorization, even though vectorized version may be shorter and cleaner. This is mainly because a vectorized version creates many temporary variables on the back, and memory allocation is slow compared to operations. So when writing Julia code, it is like a combination of interpreting language like MATLAB and compiled language like Fortran: you need to think both ways to get the most out of Julia.
+In a compiled language like Julia, loops are most-of-the-time better than vectorization, even though vectorized version may be shorter and cleaner. This is mainly because a vectorized version creates many temporary variables behind the scene, and memory allocation is slow compared to operations. So when writing Julia code, it is like a combination of interpreting language like MATLAB and compiled language like Fortran: you need to think both ways to get the most out of Julia.
 
 When people like me jumps into the Julia world, we would often love to convert our existing codes from other languages into Julia and check if it shows the promised performance. This is the time we truly learn Julia the Julian way.
 
@@ -41,11 +41,11 @@ Learning new things is fun. Starting to code in Julia, there are several things 
 
 1. Julia is not an OOP language, but everything in Julia is an object. In Julia, we use what is being called **multiple dispatch** to do things like _overloading_. To write good Julia code, you need to adopt the method-focused workflow and rethink about the knowledge you have about OOP and functional programming.
 
-2. My first implementation of KEMPO1, a 1D PIC code originally writeen in MATLAB, ran 50% slower than the MATLAB version even without graphics! This was really surprising to me, but it also showed that I was not familiar with Julia at all. The lesson here is that type stability is extremely important in Julia. Just by making the code type-stable results in a 50x speedup! For sure more tricks can be applied: somebody who came from the Haskel world with a program of simple geometry got a speedup of 1000x on Discourse.
+2. My first implementation of KEMPO1, a 1D PIC code originally writeen in MATLAB, ran 50% slower than the MATLAB version even without graphics! This was really surprising to me, but it also showed that I was not familiar with Julia at all. The lesson is that type stability is extremely important in Julia. Just by making the code type-stable results in a 50x speedup! For sure more tricks can be applied: for instance, somebody who came from the Haskel world posted a case on Discourse with a program of simple geometry accelerated by 1000x.
 
 3. The conversion from C/Fortran/Python into Julia is easy. However, Julia has 1-based indexing, the same as MATLAB/Fortran as opposed to the 0-based indexing in C/C++/Python. This is the error-prone part during the conversion. If you consider it really necessary, Julia has support for arrays with arbitrary indices, allowing, for example, to start numbering at 0. This is widely used in the image processing packages. If you are curious, check the [official documentation](https://docs.julialang.org/en/v1/devdocs/offset-arrays/).
 
-4. At the current stage, a realistic expectation for Julia program compared with C/C++/Fortran is that the timings should be within a factor of 3.
+4. At the current stage, a realistic expectation for Julia program compared with C/C++/Fortran is that the timings should be within a factor of 3. In certain cases, Julia can even outperform them (e.g. 1D Vlasov demo).
 
 ## Why Julia
 
@@ -72,7 +72,7 @@ Another example is the _porting to GPU_ process, which basically requires nothin
 
 Dependent compilation fully eliminates the overhead that exists when different libraries are separately compiled. Broadcast overrides allow you to dictate how internal structures of scientific computing codes should be implemented and optimized on your specific model.
 
-There is a tradeoff for all these amazing things to happen and it's compile-time. For this system to be used interactively, you have to take a step back and find out where you want to stop specializing and where to put up artificial walls. A combination of statically compiled and dynamically compiled code is also an engineering challenge.
+There is a tradeoff for all these amazing things to happen: compile-time. For this system to be used interactively, you have to take a step back and find out where you want to stop specializing and where to put up artificial walls. A combination of statically compiled and dynamically compiled code is also an engineering challenge.
 
 ## Getting help
 
@@ -81,7 +81,7 @@ If you know the names of unsure functions and operators, type `?` in the Julia R
 In many circumstances you can find the solutions to your question online.
 In case you fail, people in the community are generally helpful. Most of them work across multiple languages and are very knowledgeable about programming techniques. Either ask questions on the [main Discourse](https://discourse.julialang.org/) or the [Chinese Discourse](https://discourse.juliacn.com/). For specific question about packages, go to their GitHub repositories and submit an issue.
 
-The language itself gets more stable after 1.0 release, but it's still changing relatively rapidly. Take a look at [What has changed since 1.0](https://www.oxinabox.net/2021/02/13/Julia-1.6-what-has-changed-since-1.0.html) for the new gradually evolving new features.
+The language itself gets more stable after 1.0 release, but it's still changing relatively rapidly. Take a look at [What has changed since 1.0](https://www.oxinabox.net/2021/02/13/Julia-1.6-what-has-changed-since-1.0.html) for the gradually evolving new features.
 
 ### References
 
