@@ -149,7 +149,7 @@ There is a macro named `@distributed` which is very tempting to use for loop red
 
 For more in-depth usage, checkout e.g. `pmap` which applys a function to each element of a collection using available workers.
 
-## Multiple threads
+## Multi-threading
 
 Julia can be run in a multithreaded mode. This has gone through many improvements in recent versions, and may be subject to change in the future. This mode is achieved via the `JULIA_NUM_THREADS` system environment variable, or the `-t` option when opening Julia. One should perform the following steps:
 
@@ -161,6 +161,8 @@ As you have seen, in order to start Julia with multiple threads, you have to set
 Many packages provides native threading support under the hood, for example, [Tullio.jl](https://github.com/mcabbott/Tullio.jl). However, the built-in threading control is currently limited, especially for nested loops. I wish the native Julia threading can be as good as OpenMP one day.
 
 There is also a new threading library [Polyester.jl](https://github.com/JuliaSIMD/Polyester.jl) which is more restrictive but offers less overhead.
+
+As of Julia 1.7, the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible.
 
 ## Distributed computing
 
