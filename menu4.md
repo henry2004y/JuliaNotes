@@ -162,7 +162,9 @@ Many packages provides native threading support under the hood, for example, [Tu
 
 There is also a new threading library [Polyester.jl](https://github.com/JuliaSIMD/Polyester.jl) which is more restrictive but offers less overhead.
 
-As of Julia 1.7, the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible.
+As of Julia 1.7,
+* the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible;
+* there is no task migration: whichever thread creates the task is in charge of executing it. This is one of the reasons currently Julia won't benefit from hyperthreading.
 
 ## Distributed computing
 
