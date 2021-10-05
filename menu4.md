@@ -11,25 +11,21 @@ For example, the built-in one-sided parallel communication is very confusing and
 
 Mechanisms for distributed computing are built into the Julia language. But to fully take advantage of it, we need much more than the built-in support, and often we need extra packages from the community.
 
-## Coroutines
-
-
 ## SIMD
 
 In Julia now we have several options of utilizing the SIMD instructions in LLVM:
 * [LoopVectorization.jl](https://github.com/JuliaSIMD/LoopVectorization.jl): focus on kernel loops, one macro for all;
 * [SIMD.jl](https://github.com/eschnett/SIMD.jl): explicit vectorization calls. Everything at programmers' hand, but may not be optimal. The concept is similar to, e.g., Agner's vectorization library in C++.
 
-## Multiple processes
+## Multi-processing
 
-* Specify the number of required worker processes using the `-p` option on Julia startup.
+Julia provides built-in language functionality to run a program across many processes that can run locally, across a distributed network, or in a computational cluster.
+
+* Specify the number of required worker processes using the `-p {N|auto}` option on Julia startup.
+  * It is important to understand that when you start N workers, then Julia will spin up N+1 processes. If I understand it correctly, the master process is independent from the work processes, but it does not need to map to an additional physical core: this is a software level isolation.
 * Check the number of workers in Julia by using the `nworkers()` function from the Distributed package.
 * If you want to execute some script on every worker on startup, you can do it using the `-L` option. When the `-L` option is passed, then Julia stays in command line after executing the script (as opposed to running a script normally, where we have to pass the `-i` option to remain in REPL).
-
-
-It is important to understand that when you start N workers, where N is greater than 1, then Julia will spin up N+1 processes. `-p {N|auto}`, tells Julia to spin up N _additional_ worker processes on startup.
-
-You can also add processes after Julia has started using the `addprocs` function. `addprocs` does not execute the script that was specified by the `-L` switch on Julia startup.
+* You can also add processes after Julia has started using the `addprocs` function. `addprocs` does not execute the script that was specified by the `-L` switch on Julia startup. Typically this is used for experimenting interactively.
 
 Check the ID numbers of the master and worker processes:
 
@@ -149,28 +145,9 @@ There is a macro named `@distributed` which is very tempting to use for loop red
 
 For more in-depth usage, checkout e.g. `pmap` which applys a function to each element of a collection using available workers.
 
-## Multi-threading
+### Machine File On a Cluster
 
-Julia can be run in a multithreaded mode. This has gone through many improvements in recent versions, and may be subject to change in the future. This mode is achieved via the `JULIA_NUM_THREADS` system environment variable, or the `-t` option when opening Julia. One should perform the following steps:
-
-* To start Julia with the number of threads equal to the number of cores in your machine, you have to set the environment variable `JULIA_NUM_THREADS` first; otherwise start Julia with `-p=N` where N is the number of threads.
-* Check how many threads Julia is using with the `Threads.nthreads()` function.
-
-As you have seen, in order to start Julia with multiple threads, you have to set the environment variable `JULIA_NUM_THREADS`. It is used by Julia to determine how many threads it should use. This value --- in order to have any effect --- must be set before Julia is started. This means that you can access it via the `ENV["JULIA_NUM_THREADS"]` option but changing it when Julia is running will not add or remove threads.
-
-Many packages provides native threading support under the hood, for example, [Tullio.jl](https://github.com/mcabbott/Tullio.jl). However, the built-in threading control is currently limited, especially for nested loops. I wish the native Julia threading can be as good as OpenMP one day.
-
-There is also a new threading library [Polyester.jl](https://github.com/JuliaSIMD/Polyester.jl) which is more restrictive but offers less overhead.
-
-As of Julia 1.7,
-* the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible;
-* there is no task migration: whichever thread creates the task is in charge of executing it. This is one of the reasons currently Julia won't benefit from hyperthreading.
-
-## Distributed computing
-
-Julia provides built-in language functionality to run a program across many processes that can run locally, across a distributed network, or in a computational cluster.
-
-A typical scenario for distributed computing is running a parameter sweep over a significantly large set of computations. In this recipe, we will show how to create a distributed cluster that performs a parameter sweep over a numerical simulation model.
+A typical scenario for distributed computing is running a parameter sweep over a significantly large set of computations.
 
 We explain how to use the `--machine-file` Julia options to run Julia workers across many nodes. However, the computational example can also be run on a single machine using the multiprocessing mode (for example, in Julia launched with the julia `-p 4` command).
 
@@ -218,17 +195,51 @@ This will launch the Julia master process and a number of Julia slave processes,
 
 If you use a _High Performance Computing (HPC)_ system such as Cray, the passwordless SSH mechanism might not be available. However, such systems usually contain some form of cluster job management software, such as `SLURM`, `SGE`, or `PBS`. These job managers can be used from within Julia via the [ClusterManagers.jl](https://github.com/JuliaParallel/ClusterManagers.jl) package.
 
-## DistributedArray
+### DistributedArray
 
 There are supports to the SPMD through the package DistributedArray. However, currently it is not so easy to learn, and the performance is bad.
 
 1. To set the values of DArray, you need to first make them local. A typical way of doing this is by saying `mylp = d_in[:L]`, and them work on the local reference `mylp`.
 2. The initialization of DArray requires special attention to the format. I opt for the do-block syntax, but the syntax itself needs some time to understand.
 
-## Questions
+### MPI
 
 1. I am still not sure about using MPI in Julia: since I can only do this in command line, does it mean that every time the code needs to be recompiled?
 
 The answer is yes. This question reflects my misunderstanding of the underlying workflow: every Julia function and type is compiled the first time it is executed. This has nothing to do with MPI, which is a standard for inter-process communication. MPI is implemented in C, so the MPI.jl package is basically calling the C library for sending/receiving data from other processors.
+
+## Multi-threading
+
+Julia can be run in a multithreaded mode. This has gone through many improvements in recent versions, and may be subject to change in the future. This mode is achieved via the `JULIA_NUM_THREADS` system environment variable, or the `-t` option when opening Julia. One should perform the following steps:
+
+* To start Julia with the number of threads equal to the number of cores in your machine, you have to set the environment variable `JULIA_NUM_THREADS` first; otherwise start Julia with `-p=N` where N is the number of threads.
+* Check how many threads Julia is using with the `Threads.nthreads()` function.
+
+As you have seen, in order to start Julia with multiple threads, you have to set the environment variable `JULIA_NUM_THREADS`. It is used by Julia to determine how many threads it should use. This value --- in order to have any effect --- must be set before Julia is started. This means that you can access it via the `ENV["JULIA_NUM_THREADS"]` option but changing it when Julia is running will not add or remove threads.
+
+Many packages provides native threading support under the hood, for example, [Tullio.jl](https://github.com/mcabbott/Tullio.jl). However, the built-in threading control is currently limited, especially for nested loops. I wish the native Julia threading can be as good as OpenMP one day.
+
+There is also a new threading library [Polyester.jl](https://github.com/JuliaSIMD/Polyester.jl) which is more restrictive but offers less overhead.
+
+As of Julia 1.7,
+* the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible;
+* there is no task migration: whichever thread creates the task is in charge of executing it. This is one of the reasons currently Julia won't benefit from hyperthreading.
+
+## Hybrid Parallelism
+
+Based on my experiments, it is possible to combine multi-processing and multi-threading togther. Here is a simple example which can be run with `julia -p 2 -t 2`:
+```julia
+@everywhere function foo(n)
+   a = zeros(10)
+   Threads.@threads for i = 1:10
+      a[i] = Threads.threadid()
+   end
+   a
+end
+
+out = pmap(foo, 1:10)
+```
+
+---
 
 Checkout more about CPU parallel computing in Julia in [ParallelJulia](https://github.com/henry2004y/ParallelJulia). 
