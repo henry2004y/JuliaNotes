@@ -204,6 +204,8 @@ There are supports to the SPMD through the package DistributedArray. However, cu
 
 ### MPI
 
+This is probably the way to go for large-scale HPC across hundreds of nodes, because it utilizes infiniband.
+
 1. I am still not sure about using MPI in Julia: since I can only do this in command line, does it mean that every time the code needs to be recompiled?
 
 The answer is yes. This question reflects my misunderstanding of the underlying workflow: every Julia function and type is compiled the first time it is executed. This has nothing to do with MPI, which is a standard for inter-process communication. MPI is implemented in C, so the MPI.jl package is basically calling the C library for sending/receiving data from other processors.
@@ -222,7 +224,7 @@ Many packages provides native threading support under the hood, for example, [Tu
 There is also a new threading library [Polyester.jl](https://github.com/JuliaSIMD/Polyester.jl) which is more restrictive but offers less overhead.
 
 As of Julia 1.7,
-* the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible;
+* the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible (i.e. as few allocations as possible);
 * there is no task migration: whichever thread creates the task is in charge of executing it. This is one of the reasons currently Julia won't benefit from hyperthreading.
 
 ## Hybrid Parallelism
