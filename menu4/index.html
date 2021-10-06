@@ -101,6 +101,7 @@ IdentityFile ~/.ssh/cluster</code></pre>
 
 </ol>
 <h3 id=mpi ><a href="#mpi" class=header-anchor >MPI</a></h3>
+<p>This is probably the way to go for large-scale HPC across hundreds of nodes, because it utilizes infiniband.</p>
 <ol>
 <li><p>I am still not sure about using MPI in Julia: since I can only do this in command line, does it mean that every time the code needs to be recompiled?</p>
 
@@ -119,7 +120,7 @@ IdentityFile ~/.ssh/cluster</code></pre>
 <p>There is also a new threading library <a href="https://github.com/JuliaSIMD/Polyester.jl">Polyester.jl</a> which is more restrictive but offers less overhead.</p>
 <p>As of Julia 1.7,</p>
 <ul>
-<li><p>the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible;</p>
+<li><p>the garbage collector is still single-threaded, which indicates that it would be better to create as few garbages as possible &#40;i.e. as few allocations as possible&#41;;</p>
 
 <li><p>there is no task migration: whichever thread creates the task is in charge of executing it. This is one of the reasons currently Julia won&#39;t benefit from hyperthreading.</p>
 
@@ -139,7 +140,7 @@ out = pmap(foo, <span class=hljs-number >1</span>:<span class=hljs-number >10</s
 <p>Checkout more about CPU parallel computing in Julia in <a href="https://github.com/henry2004y/ParallelJulia">ParallelJulia</a>. </p>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: October 05, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: October 06, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
