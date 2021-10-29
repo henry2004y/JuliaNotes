@@ -10,7 +10,6 @@
 
 Here is a nice [blog: 7 Julia Gotcha](https://www.juliabloggers.com/7-julia-gotchas-and-how-to-handle-them/) for some basic and easily ignored tips.
 
-
 * The dot operator `.` stands in the heart of array operations. As the language evolves after Julia 1.0, there are more restrictions on the usage of dots. `.` in Julia is just a shorthand for the `broadcast` function. Consider the following example:
 
 ```julia-repl
@@ -157,6 +156,7 @@ julia> block = @view A[i-1:i+1,j-1:j+1] # no allocation
 * The equivalent of `linspace` in Julia is `range(a, stop = b, length = c) |> collect`.
 
 * Adding `;` in square bracket can change the return type to an array as you would expect. For example,
+
 ```julia-repl
 julia> x = [1:10]
 1-element Array{UnitRange{Int64},1}:
@@ -251,7 +251,7 @@ Julia provides a great tool for inspecting and diagnosing code for type-related 
 julia> @code_warntype f1() 
 ```
 
-Check for the output, especially the color coding parts. As you might expect, green is good and red is bad. The problems are with `Body::Union{Float64, Int64}` on the first line, `(#4 => 0, #14 => %29)::Union{Float64, Int64}` on line 12, and 
+Check for the output, especially the color coding parts. As you might expect, green is good and red is bad. The problems are with `Body::Union{Float64, Int64}` on the first line, `(#4 => 0, #14 => %29)::Union{Float64, Int64}` on line 12, and
 `(#13 => %29, \#4 => 0)::Union{Float64, Int64}` on the penultimate line.
 
 On the first line, the `Body::Union{Float64, Int64}`, as well as on the penultimate line, `::Union{Float64, Int64}`, tell us the same thing --- the function returns a `Union{Float64, Int64}`, meaning that the function can return either a Float or an Integer. This is textbook type instability and bad news for performance. Next, on line 12, something has a type of `Union{Float64, Int64}` and this value is then returned as the result of the function. In case you're wondering, that something is `x`.
@@ -273,7 +273,7 @@ julia> @trace f1()
 1.4111883712180104
 ```
 
-How cool is that? Crystal clear! 
+How cool is that? Crystal clear!
 
 With this feedback in mind, we can refactor our code into a new `f2` function:
 
@@ -309,14 +309,13 @@ julia> @btime f2()
 
 One specific part that I have made many mistakes is the construction of type-stable struct. Check the official performance tips about how to write type-stable struct constructors!
 
-
 ## Avoid Memory Allocation
 
 ### Using array views to avoid memory allocation
 
 ### Static arrays
 
-In the current implementation, working with large `StaticArrays` puts a lot of stress on the compiler, and becomes slower than `Base.Array` as the size increases. A very rough rule of thumb is that you should consider using a normal Array for arrays larger than 100 elements. 
+In the current implementation, working with large `StaticArrays` puts a lot of stress on the compiler, and becomes slower than `Base.Array` as the size increases. A very rough rule of thumb is that you should consider using a normal Array for arrays larger than 100 elements.
 
 ### Heap vs stack
 
@@ -397,7 +396,6 @@ Now you may have the impression that writing Julia code is like writing a static
 
 There is an excellent explanation to this on StackOverFlow.
 
-
 ## Issues
 
 * Differences between assignment, copy and deepcopy for mutable and immutable objects.
@@ -447,14 +445,16 @@ julia> a = ["1";"2"]
 julia> reshape(a,:,1)
 julia> reshape(a,1,:)
 ```
+
 * `reshape` function does not allocate new memory! The indexes can only be Int64 on a 64bit machine and Int32 on a 32bit machine. See the [reason](https://github.com/JuliaLang/julia/issues/311) behind this decision by Stefan and Jeff.
-* Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like 
+* Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like
 
 ```julia-repl
 julia> a = "hello"; a[2] = "a"
 ```
 
 On the other hand, arrays are mutable, which makes it important to distinguish between aliasing and copying. For example,
+
 ```julia-repl
 julia> a = [1,2,3]; b = a; b[1] = 42; println(a)
 ```
@@ -595,6 +595,7 @@ As similar mistakes happen so many time, I need to warn myself again: follow the
 * Over-constraining argument types is considered as an antipattern in Julia. The key reason for specifying argument types in Julia is multi-dispatch. In fact, specifying argument types for many functions does not improve performance, which is a common misunderstanding of Julia's JIT compiler. See more discussions [here](https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html).
 
 * To import a main module function into a submodule:
+
 ```julia
 module SuperModule
    # Define `foo()` but don't give it any methods yet
@@ -617,6 +618,7 @@ module SuperModule
    end
 end
 ```
+
 Remember that the imported functions must be defined before the submodules, otherwise Julia will warn you with "not found".
 
 * In Julia, generally there is no issue of memory fragmentation for array of structs, just as in C. On the contrary, for Java each class contains header.
@@ -624,3 +626,5 @@ Remember that the imported functions must be defined before the submodules, othe
 * Low level optimization: [MuladdMacro](https://github.com/SciML/MuladdMacro.jl). LLVM sometimes cannot generate optimal machine code as in GCC or intel. However, there are some hack packages in Julia for these low level instructions. In this particular case, first check if [muladd](https://docs.julialang.org/en/v1/base/math/#Base.muladd) in the base library can help!
 
 * One general technique in computer science is called lazy evaluations. This essentially means that computations of actual data are postponed until they are needed. It may be useful in the case where more information is gathered at a later stage such that we are able to perform better optimizations. Example packages are [LazyArrays](https://github.com/JuliaArrays/LazyArrays.jl) and [LazyGrids](https://github.com/JuliaArrays/LazyGrids.jl).
+
+* For a long while I don't understand the difference between 2D array and vector of vectors, especially vector of `SVector` (i.e. vector of tuples). Now suddenly I realize something: 2D arrays are actually 1D arrays which pretend to be 2D. The multi-dimensional indexes are only used for stripping and accessing the underlying 1D data. On the other hand, vector of tuples is a real 2D concept. This means that when the compiler sees a vector of tuple, it knows that each tuple is separated and is allowed to do stack level optimizations. 2D arrays are not guaranteed in this way since the end of each dimension is fake, and who knows if the user wants to do something crazy like listing the 2nd half of values in one line together with the 1st half of values in the adajacent line. The compiler has no choice but to put every elements on the heap. This also explains why we can access a 2D array with 1D indexing in Julia, while it is not possible in Fortran. These implementation details makes Fortran compilers easiler to detect stack optimization chances together with SIMD and somewhat harder in Julia.
