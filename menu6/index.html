@@ -258,7 +258,7 @@ f1 (generic function with 1 method)</code></pre>
 ┌ Warning: f1 returns Union{Float64, Int64} 
 └ @ REPL[94]:2 
 1.4111883712180104</code></pre>
-<p>How cool is that? Crystal clear&#33; </p>
+<p>How cool is that? Crystal clear&#33;</p>
 <p>With this feedback in mind, we can refactor our code into a new <code>f2</code> function:</p>
 <pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > <span class=hljs-keyword >function</span> f2() 
 </span>
@@ -290,7 +290,7 @@ f2 (generic function with 1 method)
 <h2 id=avoid_memory_allocation ><a href="#avoid_memory_allocation" class=header-anchor >Avoid Memory Allocation</a></h2>
 <h3 id=using_array_views_to_avoid_memory_allocation ><a href="#using_array_views_to_avoid_memory_allocation" class=header-anchor >Using array views to avoid memory allocation</a></h3>
 <h3 id=static_arrays ><a href="#static_arrays" class=header-anchor >Static arrays</a></h3>
-<p>In the current implementation, working with large <code>StaticArrays</code> puts a lot of stress on the compiler, and becomes slower than <code>Base.Array</code> as the size increases. A very rough rule of thumb is that you should consider using a normal Array for arrays larger than 100 elements. </p>
+<p>In the current implementation, working with large <code>StaticArrays</code> puts a lot of stress on the compiler, and becomes slower than <code>Base.Array</code> as the size increases. A very rough rule of thumb is that you should consider using a normal Array for arrays larger than 100 elements.</p>
 <h3 id=heap_vs_stack ><a href="#heap_vs_stack" class=header-anchor >Heap vs stack</a></h3>
 <p>Remember tha mutable objects like arrays are allocated on the heap, while immutable objects like tuple and static arrays are allocated on the stack. This will cause performance differences especially inside loop kernels&#33;</p>
 <h2 id=benchmarking_tools ><a href="#benchmarking_tools" class=header-anchor >Benchmarking tools</a></h2>
@@ -387,7 +387,7 @@ b = <span class=hljs-number >2</span></code></pre>
 <ul>
 <li><p><code>reshape</code> function does not allocate new memory&#33; The indexes can only be Int64 on a 64bit machine and Int32 on a 32bit machine. See the <a href="https://github.com/JuliaLang/julia/issues/311">reason</a> behind this decision by Stefan and Jeff.</p>
 
-<li><p>Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like </p>
+<li><p>Object and reference needs special attention. Strings are immutable, therefore you cannot do operations like</p>
 
 </ul>
 <pre><code class="julia-repl hljs"><span class=hljs-meta >julia&gt;</span><span class=language-julia > a = <span class=hljs-string >&quot;hello&quot;</span>; a[<span class=hljs-number >2</span>] = <span class=hljs-string >&quot;a&quot;</span></span></code></pre>
@@ -595,9 +595,13 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 <li><p>One general technique in computer science is called lazy evaluations. This essentially means that computations of actual data are postponed until they are needed. It may be useful in the case where more information is gathered at a later stage such that we are able to perform better optimizations. Example packages are <a href="https://github.com/JuliaArrays/LazyArrays.jl">LazyArrays</a> and <a href="https://github.com/JuliaArrays/LazyGrids.jl">LazyGrids</a>.</p>
 
 </ul>
+<ul>
+<li><p>For a long while I don&#39;t understand the difference between 2D array and vector of vectors, especially vector of <code>SVector</code> &#40;i.e. vector of tuples&#41;. Now suddenly I realize something: 2D arrays are actually 1D arrays which pretend to be 2D. The multi-dimensional indexes are only used for stripping and accessing the underlying 1D data. On the other hand, vector of tuples is a real 2D concept. This means that when the compiler sees a vector of tuple, it knows that each tuple is separated and is allowed to do stack level optimizations. 2D arrays are not guaranteed in this way since the end of each dimension is fake, and who knows if the user wants to do something crazy like listing the 2nd half of values in one line together with the 1st half of values in the adajacent line. The compiler has no choice but to put every elements on the heap. This also explains why we can access a 2D array with 1D indexing in Julia, while it is not possible in Fortran. These implementation details makes Fortran compilers easiler to detect stack optimization chances together with SIMD and somewhat harder in Julia.</p>
+
+</ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: October 06, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: October 29, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
