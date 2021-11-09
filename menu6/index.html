@@ -599,9 +599,13 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 <li><p>For a long while I don&#39;t understand the difference between 2D array and vector of vectors, especially vector of <code>SVector</code> &#40;i.e. vector of tuples&#41;. Now suddenly I realize something: 2D arrays are actually 1D arrays which pretend to be 2D. The multi-dimensional indexes are only used for stripping and accessing the underlying 1D data. On the other hand, vector of tuples is a real 2D concept. This means that when the compiler sees a vector of tuple, it knows that each tuple is separated and is allowed to do stack level optimizations. 2D arrays are not guaranteed in this way since the end of each dimension is fake, and who knows if the user wants to do something crazy like listing the 2nd half of values in one line together with the 1st half of values in the adajacent line. The compiler has no choice but to put every elements on the heap. This also explains why we can access a 2D array with 1D indexing in Julia, while it is not possible in Fortran. These implementation details makes Fortran compilers easiler to detect stack optimization chances together with SIMD and somewhat harder in Julia.</p>
 
 </ul>
+<ul>
+<li><p>Kernel function, a.k.a function barrier, is a critical technique to speed up type unstable computations. There are scenarios where the types of variables are only available at runtime like reading data from file. Applying function barriers properly will let the type instability only affect a small portion of the program, while the major time-consuming calculations can be kept stable. See the progress from v0.8.24 to v0.8.25 of Vlasiator.jl.</p>
+
+</ul>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: November 04, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: November 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
