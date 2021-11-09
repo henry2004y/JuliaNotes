@@ -85,8 +85,10 @@ The language itself gets more stable after 1.0 release, but it's still changing 
 
 ### References
 
-[Julia Programming Projects, Adrian Salceanu](https://github.com/PacktPublishing/Julia-Programming-Projects)
-
 [New Trends in Programming Languages](https://www.juliabloggers.com/new-trends-in-programming-languages/)
 
 [Think Julia](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html#_copyright)
+
+[Julia Data Science](https://juliadatascience.io/)
+
+[Julia Programming Projects, Adrian Salceanu](https://github.com/PacktPublishing/Julia-Programming-Projects)
