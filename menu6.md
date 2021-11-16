@@ -630,3 +630,37 @@ Remember that the imported functions must be defined before the submodules, othe
 * For a long while I don't understand the difference between 2D array and vector of vectors, especially vector of `SVector` (i.e. vector of tuples). Now suddenly I realize something: 2D arrays are actually 1D arrays which pretend to be 2D. The multi-dimensional indexes are only used for stripping and accessing the underlying 1D data. On the other hand, vector of tuples is a real 2D concept. This means that when the compiler sees a vector of tuple, it knows that each tuple is separated and is allowed to do stack level optimizations. 2D arrays are not guaranteed in this way since the end of each dimension is fake, and who knows if the user wants to do something crazy like listing the 2nd half of values in one line together with the 1st half of values in the adajacent line. The compiler has no choice but to put every elements on the heap. This also explains why we can access a 2D array with 1D indexing in Julia, while it is not possible in Fortran. These implementation details makes Fortran compilers easiler to detect stack optimization chances together with SIMD and somewhat harder in Julia.
 
 * Kernel function, a.k.a function barrier, is a critical technique to speed up type unstable computations. There are scenarios where the types of variables are only available at runtime like reading data from file. Applying function barriers properly will let the type instability only affect a small portion of the program, while the major time-consuming calculations can be kept stable. See the progress from v0.8.24 to v0.8.25 of Vlasiator.jl.
+
+* `Val` type: checkout [Val Type Performance](https://stackoverflow.com/questions/65720159/julia-valc-seems-slow-compared-to-dictionnary-lookup) for a live example. Do not abuse dispatch! The following example gives no performance gain compared to regular type dispatch:
+
+```julia
+using BenchmarkTools
+
+abstract type Average end
+struct Dirac <: Average end
+struct Father <: Average end
+struct NoAve <: Average end
+
+check_for_father_val(::Val{Father()}) = true
+
+check_for_father_val(::Val{Dirac()}) = true
+
+check_for_father_val(::Val{NoAve()}) = false
+
+
+check_for_father_type(::Union{Father, Dirac}) = true
+
+check_for_father_type(::NoAve) = false
+
+# Tests
+a = Father()
+b = NoAve()
+
+@btime check_for_father_val(Val($a))
+
+@btime check_for_father_val(Val($b))
+
+@btime check_for_father_type($a)
+
+@btime check_for_father_type($b)
+```
