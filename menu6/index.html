@@ -603,9 +603,42 @@ ERROR: UndefRefError: access to undefined reference</code></pre>
 <li><p>Kernel function, a.k.a function barrier, is a critical technique to speed up type unstable computations. There are scenarios where the types of variables are only available at runtime like reading data from file. Applying function barriers properly will let the type instability only affect a small portion of the program, while the major time-consuming calculations can be kept stable. See the progress from v0.8.24 to v0.8.25 of Vlasiator.jl.</p>
 
 </ul>
+<ul>
+<li><p><code>Val</code> type: checkout <a href="https://stackoverflow.com/questions/65720159/julia-valc-seems-slow-compared-to-dictionnary-lookup">Val Type Performance</a> for a live example. Do not abuse dispatch&#33; The following example gives no performance gain compared to regular type dispatch:</p>
+
+</ul>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> BenchmarkTools
+
+<span class=hljs-keyword >abstract type</span> Average <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >struct</span> Dirac &lt;: Average <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >struct</span> Father &lt;: Average <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >struct</span> NoAve &lt;: Average <span class=hljs-keyword >end</span>
+
+check_for_father_val(::<span class=hljs-built_in >Val</span>{Father()}) = <span class=hljs-literal >true</span>
+
+check_for_father_val(::<span class=hljs-built_in >Val</span>{Dirac()}) = <span class=hljs-literal >true</span>
+
+check_for_father_val(::<span class=hljs-built_in >Val</span>{NoAve()}) = <span class=hljs-literal >false</span>
+
+
+check_for_father_type(::<span class=hljs-built_in >Union</span>{Father, Dirac}) = <span class=hljs-literal >true</span>
+
+check_for_father_type(::NoAve) = <span class=hljs-literal >false</span>
+
+<span class=hljs-comment ># Tests</span>
+a = Father()
+b = NoAve()
+
+<span class=hljs-meta >@btime</span> check_for_father_val(<span class=hljs-built_in >Val</span>($a))
+
+<span class=hljs-meta >@btime</span> check_for_father_val(<span class=hljs-built_in >Val</span>($b))
+
+<span class=hljs-meta >@btime</span> check_for_father_type($a)
+
+<span class=hljs-meta >@btime</span> check_for_father_type($b)</code></pre>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: November 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: November 16, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
