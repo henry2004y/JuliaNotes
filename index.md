@@ -8,6 +8,7 @@
 ## How Julia works
 
 The Julia compiler workflow is presented in [Jameson Nash's talk](https://www.youtube.com/watch?v=7KGZ_9D_DbI&list=WL&index=6). The key essense is shown in the structure below:
+
 * method definition
   * macros, metaprogramming
 * code_lowered
@@ -63,6 +64,7 @@ If there's one thing that Python really does well, I would say it's the package 
 Julia learns from Python and now has a really good package system, and we have the ability to have separate packages work fully together.
 
 The key difference between Cython and Julia:
+
 * In Cython you have separately compiled functions and packages, much like static compilation to shared libraries in C++, and then you put function calls between them. In a few cases where you compile parts together it can inline, but generally you have separate packages/modules/etc. compile separately. This cuts down on compile time and makes it easier to generate a static binary but adds runtime costs.
 * In Julia you have fully dependent compilation. Packages which call other packages can take control of the full code before compilation and then choices have to be made at how to separate it in a meaningful way.
 
@@ -92,3 +94,5 @@ The language itself gets more stable after 1.0 release, but it's still changing 
 [Julia Data Science](https://juliadatascience.io/)
 
 [Julia Programming Projects, Adrian Salceanu](https://github.com/PacktPublishing/Julia-Programming-Projects)
+
+[Why is Julia Faster Than Python](https://juejin.cn/post/6844903782413778952)
