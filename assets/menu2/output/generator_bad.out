@@ -7,4 +7,4 @@
 343
 512
 729
-  0.061537 seconds (43.45 k allocations: 9.887 MiB, 27.45% gc time)
+  0.041930 seconds (43.45 k allocations: 9.887 MiB)

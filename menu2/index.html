@@ -1,63 +1,63 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/JuliaNotes/libs/highlight/github.min.css"> <link rel=stylesheet  href="/JuliaNotes/css/franklin.css"> <link rel=stylesheet  href="/JuliaNotes/css/pure.css"> <link rel=stylesheet  href="/JuliaNotes/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/JuliaNotes/assets/favicon.png"> <title>Types</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">Pure-SM</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/JuliaNotes/" class=pure-menu-link >Home</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu1/" class=pure-menu-link >Questions</a> <li class="pure-menu-item pure-menu-selected"><a href="/JuliaNotes/menu2/" class=pure-menu-link >Types</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu3/" class=pure-menu-link >Meta</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu4/" class=pure-menu-link >Parallel</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu5/" class=pure-menu-link >Interoperability</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu6/" class=pure-menu-link >Issues and Tricks</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu7/" class=pure-menu-link >Perception</a> </ul> </div> </div> <div id=main > <div class=header > <h1>Types</h1> <h2>Notes taken during the learning process</h2> </div> <div class=franklin-content ><h1 id=basic_types ><a href="#basic_types" class=header-anchor >Basic Types</a></h1> <div class=franklin-toc ><ol><li><ol><li><a href="#tuples">Tuples</a><li><a href="#arrays">Arrays</a><ol><li><a href="#mutation">Mutation</a><li><a href="#comprehension">Comprehension</a></ol><li><a href="#dictionaries">Dictionaries</a><ol><li><a href="#remarks_on_dictionaries">Remarks on dictionaries</a><li><a href="#ordered_dictionaries">Ordered dictionaries</a></ol><li><a href="#iterators">Iterators</a><li><a href="#strings">Strings</a><ol><li><a href="#regular_expressions">Regular expressions</a><li><a href="#raw_string_literals">Raw string literals</a></ol></ol><li><a href="#a_bit_more_highlighting">A bit more highlighting</a></ol></div> <h2></h2> <p>Numbers</p> <p>Numerical operators</p> <h3 id=tuples ><a href="#tuples" class=header-anchor >Tuples</a></h3> <p>Tuples are one of the simplest data types and data structures in Julia. They can have any length and can contain any kind of value –- but they are immutable. Once created, a tuple cannot be modified. A tuple can be created using the literal tuple notation, by wrapping the comma-separated values within brackets.</p> <p>In order to define a one-element tuple, we must not forget the trailing comma:</p> <pre><code class=language-julia >&#40;1,&#41;</code></pre>
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/JuliaNotes/libs/highlight/github.min.css"> <link rel=stylesheet  href="/JuliaNotes/css/franklin.css"> <link rel=stylesheet  href="/JuliaNotes/css/pure.css"> <link rel=stylesheet  href="/JuliaNotes/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/JuliaNotes/assets/favicon.png"> <title>Types</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">Pure-SM</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/JuliaNotes/" class=pure-menu-link >Home</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu1/" class=pure-menu-link >Questions</a> <li class="pure-menu-item pure-menu-selected"><a href="/JuliaNotes/menu2/" class=pure-menu-link >Types</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu3/" class=pure-menu-link >Meta</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu4/" class=pure-menu-link >Parallel</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu5/" class=pure-menu-link >Interoperability</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu6/" class=pure-menu-link >Issues and Tricks</a> <li class="pure-menu-item "><a href="/JuliaNotes/menu7/" class=pure-menu-link >Perception</a> </ul> </div> </div> <div id=main > <div class=header > <h1>Types</h1> <h2>Notes taken during the learning process</h2> </div> <div class=franklin-content ><h1 id=basic_types ><a href="#basic_types" class=header-anchor >Basic Types</a></h1> <div class=franklin-toc ><ol><li><ol><li><a href="#tuples">Tuples</a><li><a href="#arrays">Arrays</a><ol><li><a href="#mutation">Mutation</a><li><a href="#comprehension">Comprehension</a></ol><li><a href="#dictionaries">Dictionaries</a><ol><li><a href="#remarks_on_dictionaries">Remarks on dictionaries</a><li><a href="#ordered_dictionaries">Ordered dictionaries</a></ol><li><a href="#iterators">Iterators</a><li><a href="#strings">Strings</a><ol><li><a href="#regular_expressions">Regular expressions</a><li><a href="#raw_string_literals">Raw string literals</a></ol></ol><li><a href="#a_bit_more_highlighting">A bit more highlighting</a></ol></div> <h2></h2> <p>Numbers</p> <p>Numerical operators</p> <h3 id=tuples ><a href="#tuples" class=header-anchor >Tuples</a></h3> <p>Tuples are one of the simplest data types and data structures in Julia. They can have any length and can contain any kind of value –- but they are immutable. Once created, a tuple cannot be modified. A tuple can be created using the literal tuple notation, by wrapping the comma-separated values within brackets.</p> <p>In order to define a one-element tuple, we must not forget the trailing comma:</p> <pre><code class="julia hljs">(<span class=hljs-number >1</span>,)</code></pre>
 <p>But it&#39;s OK to leave off the parenthesis:</p>
-<pre><code class=language-julia >&#39;e&#39;, 2</code></pre>
+<pre><code class="julia hljs"><span class=hljs-string >&#x27;e&#x27;</span>, <span class=hljs-number >2</span></code></pre>
 <p>Besides, there are also named tuples. A named tuple represents a tuple with labeled items. We can access the individual components by label or by index:</p>
-<pre><code class=language-julia >skills &#61; &#40;language &#61; &quot;Julia&quot;, version &#61; v&quot;1.0&quot;&#41;
-skills.language # &quot;Julia&quot;
-skills&#91;1&#93; # &quot;Julia&quot;</code></pre>
+<pre><code class="julia hljs">skills = (language = <span class=hljs-string >&quot;Julia&quot;</span>, version = <span class=hljs-string >v&quot;1.0&quot;</span>)
+skills.language <span class=hljs-comment ># &quot;Julia&quot;</span>
+skills[<span class=hljs-number >1</span>] <span class=hljs-comment ># &quot;Julia&quot;</span></code></pre>
 <p>Tuple provides an elegant way of swapping the values of two variables without creating a temporary variable:</p>
-<pre><code class=language-julia >a, b &#61; b, a</code></pre>
+<pre><code class="julia hljs">a, b = b, a</code></pre>
 <p>Tuple also makes multiple return values from functions available.</p>
 <h3 id=arrays ><a href="#arrays" class=header-anchor >Arrays</a></h3>
 <p>An array is a data structure &#40;and the corresponding type&#41; that represents an ordered collection of elements. More specifically, in Julia, an array is a collection of objects stored in a multi-dimensional grid. Arrays can have any number of dimensions and are defined by their type and number of dimensions.</p>
-<pre><code class=language-julia >s &#61; &quot;abc&quot;;
-t &#61; &#91;1,2,3&#93;;
-zip&#40;s,t&#41;
-for pair in zip&#40;s,t&#41; println&#40;pair&#41; end
-collect&#40;zip&#40;s,t&#41;&#41;
-t &#61; &#91;&#40;&#96;a&#39;,1&#41;,&#40;&#96;b&#39;,2&#41;,&#40;&#96;c&#39;,3&#41;&#93;;
-for &#40;letter,number&#41; in t println&#40;number,&#39;&#39; &#39;&#39;, letter&#41; end</code></pre>
+<pre><code class="julia hljs">s = <span class=hljs-string >&quot;abc&quot;</span>;
+t = [<span class=hljs-number >1</span>,<span class=hljs-number >2</span>,<span class=hljs-number >3</span>];
+zip(s,t)
+<span class=hljs-keyword >for</span> pair <span class=hljs-keyword >in</span> zip(s,t) println(pair) <span class=hljs-keyword >end</span>
+collect(zip(s,t))
+t = [(<span class=hljs-string >`a&#x27;,1),(`</span>b&#x27;,<span class=hljs-number >2</span>),(<span class=hljs-string >`c&#x27;,3)];
+for (letter,number) in t println(number,&#x27;&#x27; &#x27;&#x27;, letter) end</span></code></pre>
 <p>If you need to traverse the elements of a sequence and their indices, you can use <code>enumerate</code>, like Python:</p>
-<pre><code class=language-julia >for &#40;index, element&#41; in enumerate&#40;&quot;abc&quot;&#41; println&#40;index, &quot; &quot;, element&#41; end</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >for</span> (index, element) <span class=hljs-keyword >in</span> enumerate(<span class=hljs-string >&quot;abc&quot;</span>) println(index, <span class=hljs-string >&quot; &quot;</span>, element) <span class=hljs-keyword >end</span></code></pre>
 <p>A one-dimensional array, also called a vector, can be easily defined using the array literal notation, the square brackets <code>&#91;...&#93;</code>:</p>
-<pre><code class=language-julia >&#91;1, 2, 3&#93;</code></pre>
+<pre><code class="julia hljs">[<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>]</code></pre>
 <p>You can also constrain the type of the elements:</p>
-<pre><code class=language-julia >Float32&#91;1, 2, 3, 4&#93;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-built_in >Float32</span>[<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >4</span>]</code></pre>
 <p>A 2D array &#40;i.e. matrix&#41; can be initialized using the same array literal notation, but this time without the commas:</p>
-<pre><code class=language-julia >&#91;1 2 3 4&#93;</code></pre>
+<pre><code class="julia hljs">[<span class=hljs-number >1</span> <span class=hljs-number >2</span> <span class=hljs-number >3</span> <span class=hljs-number >4</span>]</code></pre>
 <p>We can add more rows using semicolons:</p>
-<pre><code class=language-julia >&#91;1 2 3; 4 5 6; 7 8 9&#93;</code></pre>
+<pre><code class="julia hljs">[<span class=hljs-number >1</span> <span class=hljs-number >2</span> <span class=hljs-number >3</span>; <span class=hljs-number >4</span> <span class=hljs-number >5</span> <span class=hljs-number >6</span>; <span class=hljs-number >7</span> <span class=hljs-number >8</span> <span class=hljs-number >9</span>]</code></pre>
 <p>Julia comes with a multitude of functions that can construct and initialize arrays with different values, such as </p>
-<pre><code class=language-julia >arr2d &#61; rand&#40;5,5&#41;; arr2d&#91;&#91;true, false, true, true, false&#93;, 3:5&#93;</code></pre>
+<pre><code class="julia hljs">arr2d = rand(<span class=hljs-number >5</span>,<span class=hljs-number >5</span>); arr2d[[<span class=hljs-literal >true</span>, <span class=hljs-literal >false</span>, <span class=hljs-literal >true</span>, <span class=hljs-literal >true</span>, <span class=hljs-literal >false</span>], <span class=hljs-number >3</span>:<span class=hljs-number >5</span>]</code></pre>
 <p>This is often seen in MATLAB codes.</p>
 <h4 id=mutation ><a href="#mutation" class=header-anchor >Mutation</a></h4>
 <p>We can add more elements to the end of a collection by using the <code>push&#33;</code> function. Similarly, we can remove elements from the end of an array using <code>pop&#33;</code>. If we want to remove an element other than the last, we can use the <code>deleteat&#33;</code> function, indicating the index that we want to be removed.</p>
 <p>Finally, a word of warning when mutating arrays. In Julia, the arrays are passed to functions by reference. This means that the original array is being sent as the argument to the various mutating functions, and not its copy. Beware not to accidentally make unwanted modifications. Similarly, when assigning an array to a variable, a new reference is created, but the data is not copied. So for instance:</p>
-<pre><code class=language-julia >arr &#61; &#91;1,2,3&#93;  
-arr2 &#61; arr 
-pop&#33;&#40;arr2&#41;  
-arr2 # &#91;1,2&#93;
-arr  # &#91;1,2&#93;</code></pre>
+<pre><code class="julia hljs">arr = [<span class=hljs-number >1</span>,<span class=hljs-number >2</span>,<span class=hljs-number >3</span>]  
+arr2 = arr 
+pop!(arr2)  
+arr2 <span class=hljs-comment ># [1,2]</span>
+arr  <span class=hljs-comment ># [1,2]</span></code></pre>
 <p>Assigning <code>arr</code> to <code>arr2</code> does not copy the values of <code>arr</code> into <code>arr2</code>, it only creates a new binding &#40;a new name&#41; that points to the original <code>arr</code> array. To create a separate array with the same values, we need to use the <code>copy</code> function:</p>
-<pre><code class=language-julia >arr2 &#61; copy&#40;arr&#41; # &#91;1,2&#93;</code></pre>
+<pre><code class="julia hljs">arr2 = copy(arr) <span class=hljs-comment ># [1,2]</span></code></pre>
 <p>However, later if you assign <code>arr2</code> to other values, <code>arr</code> will not change&#33; </p>
 <h4 id=comprehension ><a href="#comprehension" class=header-anchor >Comprehension</a></h4>
 <p>Array comprehensions provide a very powerful way to construct arrays. It is similar to the previously discussed array literal notation, but instead of passing in the actual values, we use a computation over an iterable object.</p>
 <p>An example will make it clear:</p>
-<pre><code class=language-julia >&#91;x &#43;&#61; 1 for x &#61; 1:5&#93;</code></pre>
+<pre><code class="julia hljs">[x += <span class=hljs-number >1</span> <span class=hljs-keyword >for</span> x = <span class=hljs-number >1</span>:<span class=hljs-number >5</span>]</code></pre>
 <p>This can be read as: for each element <code>x</code> within the range <code>1</code> to <code>5</code>, compute <code>x&#43;1</code> and put the resultant value in the array.</p>
 <p>A more complicated example:</p>
-<pre><code class=language-julia >Float32&#91;x &#43;&#61; 1 for x &#61; 1:10 if x/2 &gt; 3&#93;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-built_in >Float32</span>[x += <span class=hljs-number >1</span> <span class=hljs-keyword >for</span> x = <span class=hljs-number >1</span>:<span class=hljs-number >10</span> <span class=hljs-keyword >if</span> x/<span class=hljs-number >2</span> &gt; <span class=hljs-number >3</span>]</code></pre>
 <p>But the superpower of the comprehensions is activated when they are used for creating <strong>generators</strong>. Generators can be iterated to produce values on demand, instead of allocating an array and storing all the values in advance. You&#39;ll see what that means in a second.</p>
 <p>Generators are defined just like array comprehensions, but without the square brackets:</p>
-<pre><code class=language-julia >&#40;x&#43;&#61;1 for x &#61; 1:10&#41; 
-# Base.Generator&#123;UnitRange&#123;Int64&#125;,##41#42&#125;&#40;#41, 1:10&#41;</code></pre>
+<pre><code class="julia hljs">(x+=<span class=hljs-number >1</span> <span class=hljs-keyword >for</span> x = <span class=hljs-number >1</span>:<span class=hljs-number >10</span>) 
+<span class=hljs-comment ># Base.Generator{UnitRange{Int64},##41#42}(#41, 1:10)</span></code></pre>
 <p>They allow us to work with potentially infinite collections. Check the following example, where we want to print the numbers from one to one million with a cube less than or equal to <code>1\_000</code>. The handy <code>@time</code> macro is used for profiling:</p>
-<pre><code class=language-julia >@time for i in &#91;x^3 for x&#61;1:1_000_000&#93; 
-    i &gt;&#61; 1_000 &amp;&amp; break 
-    println&#40;i&#41; 
-end</code></pre>
-<pre><code class="plaintext code-output">1
+<pre><code class="julia hljs"><span class=hljs-meta >@time</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> [x^<span class=hljs-number >3</span> <span class=hljs-keyword >for</span> x=<span class=hljs-number >1</span>:<span class=hljs-number >1_000_000</span>] 
+    i &gt;= <span class=hljs-number >1_000</span> &amp;&amp; <span class=hljs-keyword >break</span> 
+    println(i) 
+<span class=hljs-keyword >end</span></code></pre>
+<pre><code class="plaintext hljs">1
 8
 27
 64
@@ -66,15 +66,15 @@ end</code></pre>
 343
 512
 729
-  0.061537 seconds (43.45 k allocations: 9.887 MiB, 27.45% gc time)
+  0.041930 seconds (43.45 k allocations: 9.887 MiB)
 </code></pre>
 <p>This computation uses significant resources, over 10 MB of memory and almost 60,000 allocations, because the comprehension creates the full array of one million items, despite the fact that we only iterate over its first nine elements.</p>
 <p>Compare this with using a generator:</p>
-<pre><code class=language-julia >@time for i in &#40;x^3 for x&#61;1:1_000_000&#41;
-   i &gt;&#61; 1_000 &amp;&amp; break 
-   println&#40;i&#41; 
-end</code></pre>
-<pre><code class="plaintext code-output">1
+<pre><code class="julia hljs"><span class=hljs-meta >@time</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> (x^<span class=hljs-number >3</span> <span class=hljs-keyword >for</span> x=<span class=hljs-number >1</span>:<span class=hljs-number >1_000_000</span>)
+   i &gt;= <span class=hljs-number >1_000</span> &amp;&amp; <span class=hljs-keyword >break</span> 
+   println(i) 
+<span class=hljs-keyword >end</span></code></pre>
+<pre><code class="plaintext hljs">1
 8
 27
 64
@@ -83,43 +83,43 @@ end</code></pre>
 343
 512
 729
-  0.019360 seconds (13.48 k allocations: 779.183 KiB)
+  0.017494 seconds (13.49 k allocations: 781.308 KiB)
 </code></pre>
 <p>Less than 1 MB and a quarter of the number of allocations. The difference will be even more dramatic if we increase the number of elements in the array.</p>
 <h3 id=dictionaries ><a href="#dictionaries" class=header-anchor >Dictionaries</a></h3>
 <p>The dictionary, called <code>Dict</code>, is one of Julia&#39;s versatile data structures. It&#39;s an associative collection –- it associates keys with values. You can think of a <code>Dict</code> as a look-up table implementation –- given a single piece of information, the key, it will return the corresponding value.</p>
 <p><code>Pairs</code> are one of the building blocks of Julia and can be used, among other things, for creating dictionaries.  The compiler will do its best to infer the type of the collection from the types of its parts.</p>
 <p>In some instances, the automatic conversion works:</p>
-<pre><code class=language-julia >dx &#61; Dict&#40;1 &#61;&gt; 11&#41; 
-dx&#91;2.0&#93; &#61; 12</code></pre>
+<pre><code class="julia hljs">dx = <span class=hljs-built_in >Dict</span>(<span class=hljs-number >1</span> =&gt; <span class=hljs-number >11</span>) 
+dx[<span class=hljs-number >2.0</span>] = <span class=hljs-number >12</span></code></pre>
 <p>Julia has silently converted 2.0 to the corresponding <code>Int</code> value. But that won&#39;t always work:</p>
-<pre><code class=language-julia >dx&#91;2.4&#93; &#61; 12 # InexactError: Int64&#40;Int64, 2.4&#41;</code></pre>
+<pre><code class="julia hljs">dx[<span class=hljs-number >2.4</span>] = <span class=hljs-number >12</span> <span class=hljs-comment ># InexactError: Int64(Int64, 2.4)</span></code></pre>
 <p>You can also specify and constrain the type of <code>Dict</code> upon constructing it, instead of leaving it up to Julia:</p>
-<pre><code class=language-julia >dd &#61; Dict&#123;String,Int&#125;&#40;&quot;x&quot; &#61;&gt; 2.0&#41;</code></pre>
+<pre><code class="julia hljs">dd = <span class=hljs-built_in >Dict</span>{<span class=hljs-built_in >String</span>,<span class=hljs-built_in >Int</span>}(<span class=hljs-string >&quot;x&quot;</span> =&gt; <span class=hljs-number >2.0</span>)</code></pre>
 <p>We can also use <code>Pairs</code> to create a <code>Dict</code>:</p>
-<pre><code class=language-julia >p1 &#61; &quot;a&quot; &#61;&gt; 1
-p2 &#61; Pair&#40;&quot;b&quot;, 2&#41;
-Dict&#40;p1, p2&#41;</code></pre>
+<pre><code class="julia hljs">p1 = <span class=hljs-string >&quot;a&quot;</span> =&gt; <span class=hljs-number >1</span>
+p2 = <span class=hljs-built_in >Pair</span>(<span class=hljs-string >&quot;b&quot;</span>, <span class=hljs-number >2</span>)
+<span class=hljs-built_in >Dict</span>(p1, p2)</code></pre>
 <p>We can also use an <code>Array</code> of <code>Pair</code>:</p>
-<pre><code class=language-julia >Dict&#40;&#91;p1, p2&#93;&#41;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-built_in >Dict</span>([p1, p2])</code></pre>
 <p>We can do the same with arrays of <code>tuples</code>:</p>
-<pre><code class=language-julia >Dict&#40;&#91;&#40;&quot;a&quot;, 5&#41;, &#40;&quot;b&quot;, 10&#41;&#93;&#41;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-built_in >Dict</span>([(<span class=hljs-string >&quot;a&quot;</span>, <span class=hljs-number >5</span>), (<span class=hljs-string >&quot;b&quot;</span>, <span class=hljs-number >10</span>)])</code></pre>
 <p>Finally, a Dict can be constructed using <code>comprehensions</code>:</p>
-<pre><code class=language-julia >using Dates 
-Dict&#40;&#91;x &#61;&gt; Dates.dayname&#40;x&#41; for x &#61; &#40;1:7&#41;&#93;&#41;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Dates 
+<span class=hljs-built_in >Dict</span>([x =&gt; Dates.dayname(x) <span class=hljs-keyword >for</span> x = (<span class=hljs-number >1</span>:<span class=hljs-number >7</span>)])</code></pre>
 <p>Your output will be different as it&#39;s likely that the keys won&#39;t be ordered from 1 to 7. Dicts are <em>not</em> ordered collections in Julia.</p>
 <p>To avoid undefined key errors, we can check if the key exists in the first place:</p>
-<pre><code class=language-julia >haskey&#40;d, :baz&#41;</code></pre>
+<pre><code class="julia hljs">haskey(d, :baz)</code></pre>
 <p>As an alternative, if we want to also get a default value when the key does not exist, we can use the following:</p>
-<pre><code class=language-julia >get&#40;d, :baz, 0&#41;</code></pre>
+<pre><code class="julia hljs">get(d, :baz, <span class=hljs-number >0</span>)</code></pre>
 <p>The <code>get</code> function has a more powerful twin, <code>get&#33;</code>, which also stores the searched key into the <code>Dict</code>, using the default value:</p>
-<pre><code class=language-julia >get&#33;&#40;d, :baz, 100&#41;</code></pre>
+<pre><code class="julia hljs">get!(d, :baz, <span class=hljs-number >100</span>)</code></pre>
 <p>Adding values to a <code>Dict</code> is routinely done using the square bracket notation &#40;which is similar to indexing into it, while also performing an assignment&#41;.</p>
 <p>Removing a key-value Pair is just a matter of invoking <code>delete&#33;</code> &#40;note the presence of the exclamation mark here too&#41;.</p>
 <code>merge</code>
 <p><code>keys, values</code>, convert to array with <code>collect</code></p>
-<pre><code class=language-julia >d &#61; Dict&#40;zip&#40;&quot;abc&quot;,1:3&#41;&#41;
-for &#40;key,value&#41; in d println&#40;key,&quot; &quot;, value&#41;</code></pre>
+<pre><code class="julia hljs">d = <span class=hljs-built_in >Dict</span>(zip(<span class=hljs-string >&quot;abc&quot;</span>,<span class=hljs-number >1</span>:<span class=hljs-number >3</span>))
+<span class=hljs-keyword >for</span> (key,value) <span class=hljs-keyword >in</span> d println(key,<span class=hljs-string >&quot; &quot;</span>, value)</code></pre>
 <h4 id=remarks_on_dictionaries ><a href="#remarks_on_dictionaries" class=header-anchor >Remarks on dictionaries</a></h4>
 <p>I have encountered many performance penalties involving dictionaries in Julia, especially when porting codes from Python. In practice, there are several alternative data structures that provide us with much better performance than a general dictionary. Take a look at the dictionary discussion session in <a href="https://www.oxinabox.net/2020/04/19/Julia-Antipatterns.html">this post</a>. TL;DR: consider <a href="https://github.com/JuliaCollections/OrderedCollections.jl/">LittleDict</a> or named tuple instead&#33;</p>
 <h4 id=ordered_dictionaries ><a href="#ordered_dictionaries" class=header-anchor >Ordered dictionaries</a></h4>
@@ -136,13 +136,13 @@ for &#40;key,value&#41; in d println&#40;key,&quot; &quot;, value&#41;</code></p
 <p>For example, in order to define a regular string that matches all the letters, we can use <code>r&quot;&#91;a-zA-Z&#93;*&quot;</code>.</p>
 <p>Julia provides quite a few nonstandard string literals –- and we can even define our own if we want to. The most widely used are for regular expressions <code>r&quot;...&quot;</code>, byte array literals <code>b&quot;...&quot;</code>, version number literals <code>v&quot;...&quot;</code>, and package management commands <code>pkg&quot;...&quot;</code>.</p>
 <p>Here is how we build a regular expression in Julia–- it matches numbers between 0 and 9:</p>
-<pre><code class=language-julia >reg &#61; r&quot;&#91;0-9&#93;&#43;&quot;
-match&#40;reg, &quot;It was 1970&quot;&#41; # RegexMatch&#40;&quot;1970&quot;&#41;</code></pre>
+<pre><code class="julia hljs">reg = <span class=hljs-string >r&quot;[0-9]+&quot;</span>
+match(reg, <span class=hljs-string >&quot;It was 1970&quot;</span>) <span class=hljs-comment ># RegexMatch(&quot;1970&quot;)</span></code></pre>
 <p>The nonstandard string literal has the type of <code>Regex</code>. This gives away the fact that there&#39;s also a <code>Regex</code> constructor available:</p>
-<pre><code class=language-julia >Regex&#40;&quot;&#91;0-9&#93;&#43;&quot;&#41;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-built_in >Regex</span>(<span class=hljs-string >&quot;[0-9]+&quot;</span>)</code></pre>
 <p>The behavior of the regular expression can be affected by using some combination of the flags <code>i</code>, <code>m</code>, <code>s</code>, and <code>x</code>. These modifiers must be placed right after the closing double quote mark:</p>
-<pre><code class=language-julia >match&#40;r&quot;it was&quot;, &quot;It was 1970&quot;&#41; # case-sensitive no match
-match&#40;r&quot;it was&quot;i, &quot;It was 1970&quot;&#41; # case-insensitive match</code></pre>
+<pre><code class="julia hljs">match(<span class=hljs-string >r&quot;it was&quot;</span>, <span class=hljs-string >&quot;It was 1970&quot;</span>) <span class=hljs-comment ># case-sensitive no match</span>
+match(<span class=hljs-string >r&quot;it was&quot;i</span>, <span class=hljs-string >&quot;It was 1970&quot;</span>) <span class=hljs-comment ># case-insensitive match</span></code></pre>
 <p>As you might expect, <code>i</code> performs a case-insensitive pattern match. Without the <code>i</code> modifier, match returns nothing –- a special value that does not print anything at the interactive prompt–- to indicate that the regex does not match the given string.</p>
 <p>These are the available modifiers:</p>
 <ul>
@@ -156,17 +156,17 @@ match&#40;r&quot;it was&quot;i, &quot;It was 1970&quot;&#41; # case-insensitive 
 
 </ul>
 <p>The <code>occursin</code> function is more concise if all we need is to check if a regex or a substring is contained in a string –- if we don&#39;t want to extract or replace the matches:</p>
-<pre><code class=language-julia >occursin&#40;r&quot;hello&quot;, &quot;It was 1970&quot;&#41; # false
-occursin&#40;r&quot;19&quot;, &quot;It was 1970&quot;&#41;  # true</code></pre>
+<pre><code class="julia hljs">occursin(<span class=hljs-string >r&quot;hello&quot;</span>, <span class=hljs-string >&quot;It was 1970&quot;</span>) <span class=hljs-comment ># false</span>
+occursin(<span class=hljs-string >r&quot;19&quot;</span>, <span class=hljs-string >&quot;It was 1970&quot;</span>)  <span class=hljs-comment ># true</span></code></pre>
 <p>When a regular expression does match, it returns a <code>RegexMatch</code> object. These objects encapsulate how the expression matches, including the substring that the pattern matches and any captured substrings:</p>
-<pre><code class=language-julia >alice_in_wonderland &#61; &quot;Why, sometimes I&#39;ve believed as many as six
-impossible things before breakfast.&quot;
-m &#61; match&#40;r&quot;&#40;\w&#43;&#41;&#43;&quot;, alice_in_wonderland&#41; # RegexMatch&#40;&quot;Why&quot;, 1&#61;&quot;Why&quot;&#41;</code></pre>
+<pre><code class="julia hljs">alice_in_wonderland = <span class=hljs-string >&quot;Why, sometimes I&#x27;ve believed as many as six
+impossible things before breakfast.&quot;</span>
+m = match(<span class=hljs-string >r&quot;(\w+)+&quot;</span>, alice_in_wonderland) <span class=hljs-comment ># RegexMatch(&quot;Why&quot;, 1=&quot;Why&quot;)</span></code></pre>
 <p>The <code>\w</code> regex will match a word, so in this snippet we captured the first word, Why.</p>
 <p>We also have the option to specify the index at which to start the search:</p>
-<pre><code class=language-julia >m &#61; match&#40;r&quot;&#40;\w&#43;&#41;&#43;&quot;, alice_in_wonderland, 6&#41; # RegexMatch&#40;&quot;sometimes&quot;, 1&#61;&quot;sometimes&quot;&#41;</code></pre>
+<pre><code class="julia hljs">m = match(<span class=hljs-string >r&quot;(\w+)+&quot;</span>, alice_in_wonderland, <span class=hljs-number >6</span>) <span class=hljs-comment ># RegexMatch(&quot;sometimes&quot;, 1=&quot;sometimes&quot;)</span></code></pre>
 <p>Let&#39;s try something a bit more complex:</p>
-<pre><code class=language-julia >m &#61; match&#40;r&quot;&#40;&#40;\w&#43;&#41;&#40;\s&#43;|\W&#43;&#41;&#41;&quot;, alice_in_wonderland&#41; # RegexMatch&#40;&quot;Why, &quot;, 1&#61;&quot;Why, &quot;, 2&#61;&quot;Why&quot;, 3&#61;&quot;, &quot;&#41;</code></pre>
+<pre><code class="julia hljs">m = match(<span class=hljs-string >r&quot;((\w+)(\s+|\W+))&quot;</span>, alice_in_wonderland) <span class=hljs-comment ># RegexMatch(&quot;Why, &quot;, 1=&quot;Why, &quot;, 2=&quot;Why&quot;, 3=&quot;, &quot;)</span></code></pre>
 <p>The resultant <code>RegexMatch</code> object <code>m</code> exposes the following properties &#40;or fields, in Julia&#39;s lingo&#41;:</p>
 <ul>
 <li><p><code>m.match</code> &#40;Why, &#41; contains the entire substring that matched.</p>
@@ -179,34 +179,30 @@ m &#61; match&#40;r&quot;&#40;\w&#43;&#41;&#43;&quot;, alice_in_wonderland&#41; 
 
 </ul>
 <p>Julia does not provide a <code>g</code> modifier, for a greedy or global match. If you need all the matches, you can iterate over them using <code>eachmatch&#40;&#41;</code>, with a construct like the following:</p>
-<pre><code class=language-julia >for m in eachmatch&#40;r&quot;&#40;&#40;\w&#43;&#41;&#40;\s&#43;|\W&#43;&#41;&#41;&quot;, alice_in_wonderland&#41; 
-   println&#40;m&#41; 
-end</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >for</span> m <span class=hljs-keyword >in</span> eachmatch(<span class=hljs-string >r&quot;((\w+)(\s+|\W+))&quot;</span>, alice_in_wonderland) 
+   println(m) 
+<span class=hljs-keyword >end</span></code></pre>
 <p>Or, alternatively, we can put all the matches in a list using <code>collect&#40;&#41;</code>:</p>
-<pre><code class=language-julia >collect&#40;eachmatch&#40;r&quot;&#40;&#40;\w&#43;&#41;&#40;\s&#43;|\W&#43;&#41;&#41;&quot;, alice_in_wonderland&#41;&#41;</code></pre>
+<pre><code class="julia hljs">collect(eachmatch(<span class=hljs-string >r&quot;((\w+)(\s+|\W+))&quot;</span>, alice_in_wonderland))</code></pre>
 <p>For more info about regular expressions, check the <a href="https://docs.julialang.org/en/stable/manual/strings/#Regular-Expressions-1">official documentation</a>.</p>
 <h4 id=raw_string_literals ><a href="#raw_string_literals" class=header-anchor >Raw string literals</a></h4>
 <p>If you need to define a string that does not perform interpolation or escaping, for example to represent code from another language that might contain <code>&#36;</code> and <code>&#96;</code> which can interfere with the Julia parser, you can use raw strings. They are constructed with <code>raw&quot;...&quot;</code> and create ordinary <code>String</code> objects that contain the enclosed characters exactly as entered, with no interpolation or escaping:</p>
-<pre><code class=language-julia >&quot;This &#36;will error out&quot; # ERROR: UndefVarError: will not defined</code></pre>
+<pre><code class="julia hljs"><span class=hljs-string >&quot;This <span class=hljs-variable >$will</span> error out&quot;</span> <span class=hljs-comment ># ERROR: UndefVarError: will not defined</span></code></pre>
 <p>Putting a <code>&#36;</code> inside the string will cause Julia to perform interpolation and look for a variable called will:</p>
-<pre><code class=language-julia >raw&quot;This &#36;will work&quot; # &quot;This \&#36;will work&quot;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-string >raw&quot;This <span class=hljs-variable >$will</span> work&quot;</span> <span class=hljs-comment ># &quot;This \$will work&quot;</span></code></pre>
 <p>But by using a raw string, the <code>&#36;</code> symbol will be ignored &#40;or rather, automatically escaped, as you can see in the output&#41;.</p>
 <h2 id=a_bit_more_highlighting ><a href="#a_bit_more_highlighting" class=header-anchor >A bit more highlighting</a></h2>
 <p>Extension of highlighting for <code>pkg</code> an <code>shell</code> mode in Julia:</p>
-<pre><code class=language-julia-repl >&#40;v1.4&#41; pkg&gt; add Franklin
-shell&gt; blah
-julia&gt; 1&#43;1
-&#40;Sandbox&#41; pkg&gt; resolve</code></pre>
+<pre><code class="julia-repl hljs"><span class=hljs-metap>(v1.4) pkg&gt;</span> add Franklin
+<span class=hljs-metas>shell&gt;</span> blah
+<span class="hljs-meta prompt_">julia&gt;</span><span class=language-julia > <span class=hljs-number >1</span>+<span class=hljs-number >1</span>
+</span><span class=hljs-metap>(Sandbox) pkg&gt;</span> resolve</code></pre>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Hongyang Zhou. Last modified: December 10, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    &copy; Hongyang Zhou. Last modified: December 07, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
       </div> 
   </div> 
   <script src="/JuliaNotes/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/JuliaNotes/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
