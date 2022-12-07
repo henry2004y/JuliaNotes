@@ -664,3 +664,5 @@ b = NoAve()
 
 @btime check_for_father_type($b)
 ```
+
+* Julia has no concept of variable shadowing, but there is [no impact on performance if a variable name is used several times](https://discourse.julialang.org/t/type-unstable-function-because-same-variable-name-used-twice/58810/5). However, pay attention to the captured variables in closure.
